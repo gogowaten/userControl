@@ -14,22 +14,22 @@ using System.Windows.Shapes;
 namespace _20200612_WpfApp1UpDown
 {
     /// <summary>
-    /// UserControl1.xaml の相互作用ロジック
+    /// UserControl2.xaml の相互作用ロジック
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class UserControl2 : UserControl
     {
-        public UserControl1()
+        public UserControl2()
         {
             InitializeComponent();
         }
 
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(int), typeof(UserControl1),
-                new PropertyMetadata(
-                new PropertyChangedCallback((dependency, e) =>
-                {
-                    (dependency as UserControl1).OnValuePropertyChanged(dependency, e);
-                })));
+    DependencyProperty.Register("Value", typeof(int), typeof(UserControl2),
+        new PropertyMetadata(
+        new PropertyChangedCallback((dependency, e) =>
+        {
+            (dependency as UserControl2).OnValuePropertyChanged(dependency, e);
+        })));
 
         public int Value
         {
@@ -37,9 +37,15 @@ namespace _20200612_WpfApp1UpDown
             set { SetValue(ValueProperty, value); }
         }
 
-        private void OnValuePropertyChanged(DependencyObject dependency,DependencyPropertyChangedEventArgs e)
+        private void OnValuePropertyChanged(DependencyObject dependency, DependencyPropertyChangedEventArgs e)
         {
+            if (dependency is null)
+            {
+                throw new ArgumentNullException(nameof(dependency));
+            }
+
             var neko = e.NewValue;
+            textBlockValue.Text = e.NewValue.ToString();
         }
 
 
@@ -53,6 +59,5 @@ namespace _20200612_WpfApp1UpDown
         {
             this.Value--;
         }
-
     }
 }

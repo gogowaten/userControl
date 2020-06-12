@@ -9,6 +9,7 @@
     <Grid>
     <StackPanel>
       <local:UserControl1 Value="200"/>
+      <local:UserControl2 />
     </StackPanel>
     </Grid>
 </Window>

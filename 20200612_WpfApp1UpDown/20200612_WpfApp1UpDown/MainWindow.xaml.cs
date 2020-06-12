@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+//.NET CoreのWPFプロジェクトにユーザーコントロールを追加してみた
+//.NET FrameworkのWPFプロジェクトにユーザーコントロールを追加するよりも
+//こちらのほうがファイル構成がスッキリする
 namespace _20200612_WpfApp1UpDown
 {
     /// <summary>
