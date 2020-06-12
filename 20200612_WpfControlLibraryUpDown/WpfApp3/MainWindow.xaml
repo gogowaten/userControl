@@ -1,0 +1,14 @@
+﻿<Window x:Class="WpfApp3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp3"
+        mc:Ignorable="d"
+        xmlns:myLocal="clr-namespace:_20200612_WpfControlLibraryUpDown;assembly=20200612_WpfControlLibraryUpDown"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+    <myLocal:UserControl1 HorizontalAlignment="Left" Margin="275,107,0,0" VerticalAlignment="Top"/>
+
+  </Grid>
+</Window>
