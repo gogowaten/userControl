@@ -1,0 +1,21 @@
+﻿<Window x:Class="_20200612_dllを使う方.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_20200612_dllを使う方"
+        
+        xmlns:local2="clr-namespace:_20200612_WpfControlLibraryUpDown;assembly=20200612_WpfControlLibraryUpDown"
+        xmlns:wpfApp="clr-namespace:_20200612_WpfApp1UpDown;assembly=20200612_WpfApp1UpDown"
+        
+        mc:Ignorable="d"
+        Title="MainWindow" Height="300" Width="400">
+    <Grid Margin="10">
+    <StackPanel>
+      <local2:UserControl1 Value="20"/>
+      <local2:UserControl2 Value="40"/>
+      <wpfApp:UserControl1 Value="120"/>
+      <wpfApp:UserControl2 Value="140"/>
+    </StackPanel>
+  </Grid>
+</Window>

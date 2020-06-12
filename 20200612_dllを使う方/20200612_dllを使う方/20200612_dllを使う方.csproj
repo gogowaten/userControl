@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>_20200612_dllを使う方</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="20200612_WpfApp1UpDown">
+      <HintPath>..\..\20200612_WpfApp1UpDown\20200612_WpfApp1UpDown\bin\Release\netcoreapp3.1\20200612_WpfApp1UpDown.dll</HintPath>
+    </Reference>
+    <Reference Include="20200612_WpfControlLibraryUpDown">
+      <HintPath>..\..\20200612_WpfControlLibraryUpDown\20200612_WpfControlLibraryUpDown\bin\x64\Release\20200612_WpfControlLibraryUpDown.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -8,9 +8,11 @@
         xmlns:mylocal="clr-namespace:_20200612_WpfControlLibraryUpDown;assembly=20200612_WpfControlLibraryUpDown"
         xmlns:mylocal2="clr-namespace:WpfControlLibrary1;assembly=WpfControlLibrary1"
         xmlns:mylocal3="clr-namespace:WpfControlLibrary2;assembly=WpfControlLibrary2"
+          
+      
   
         mc:Ignorable="d"
-        Title="MainWindow" Height="200" Width="800">
+        Title="MainWindow" Height="300" Width="800">
   <Grid>
     <!--<UpDown:UserControl1 HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
     <StackPanel>
