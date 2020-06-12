@@ -13,26 +13,31 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace _20200612_WpfControlLibraryUpDown
+//コードでRelativeSourceを設定してみたけどデザイン画面上ではvalueの値は反映されなかった…
+namespace WpfControlLibrary2
 {
     /// <summary>
     /// UserControl1.xaml の相互作用ロジック
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class UserControl3 : UserControl
     {
-        public UserControl1()
+        public UserControl3()
         {
             InitializeComponent();
 
-
-
+            var source = new RelativeSource(RelativeSourceMode.FindAncestor);
+            source.AncestorType = this.GetType();
+            var b = new Binding();
+            //b.Source = this;
+            b.RelativeSource = source;
+            b.Mode = BindingMode.TwoWay;
+            b.Path = new PropertyPath(nameof(Value));
+            textBlockValue.SetBinding(TextBlock.TextProperty, b);
+            
         }
 
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-        "Value",
-        typeof(int),
-        typeof(UserControl1),
-        new PropertyMetadata(0));
+        public static readonly DependencyProperty ValueProperty =
+            DependencyProperty.Register("Value", typeof(int), typeof(UserControl3), new PropertyMetadata(0));
 
         public int Value
         {

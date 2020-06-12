@@ -1,0 +1,23 @@
+﻿<Window   x:Class="WpfApp4.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp4"
+  
+        xmlns:mylocal="clr-namespace:_20200612_WpfControlLibraryUpDown;assembly=20200612_WpfControlLibraryUpDown"
+        xmlns:mylocal2="clr-namespace:WpfControlLibrary1;assembly=WpfControlLibrary1"
+        xmlns:mylocal3="clr-namespace:WpfControlLibrary2;assembly=WpfControlLibrary2"
+  
+        mc:Ignorable="d"
+        Title="MainWindow" Height="200" Width="800">
+  <Grid>
+    <!--<UpDown:UserControl1 HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
+    <StackPanel>
+      <mylocal:UserControl1 Value="1220"/>
+      <mylocal2:UserControl2 Value="50"/>
+      <mylocal3:UserControl3 Value="200"/>
+
+    </StackPanel>
+  </Grid>
+</Window>

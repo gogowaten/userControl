@@ -13,26 +13,31 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace _20200612_WpfControlLibraryUpDown
+namespace WpfControlLibrary1
 {
     /// <summary>
     /// UserControl1.xaml の相互作用ロジック
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class UserControl2 : UserControl
     {
-        public UserControl1()
+        public UserControl2()
         {
             InitializeComponent();
 
-
-
+            var b = new Binding();
+            b.Source = this;            
+            b.Mode = BindingMode.TwoWay;
+            b.Path = new PropertyPath(nameof(Value));
+            textBlockValue.SetBinding(TextBlock.TextProperty, b);
+            
+            //BindingOperations.SetBinding(textBlockValue, TextBlock.TextProperty, b);
         }
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
-        "Value",
-        typeof(int),
-        typeof(UserControl1),
-        new PropertyMetadata(0));
+     "Value",
+     typeof(int),
+     typeof(UserControl2),
+     new PropertyMetadata(0));
 
         public int Value
         {
@@ -49,5 +54,7 @@ namespace _20200612_WpfControlLibraryUpDown
         {
             this.Value--;
         }
+
+        
     }
 }
