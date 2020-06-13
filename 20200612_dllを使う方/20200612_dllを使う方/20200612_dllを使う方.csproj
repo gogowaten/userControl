@@ -15,6 +15,15 @@
     <Reference Include="20200612_WpfControlLibraryUpDown">
       <HintPath>..\..\20200612_WpfControlLibraryUpDown\20200612_WpfControlLibraryUpDown\bin\x64\Release\20200612_WpfControlLibraryUpDown.dll</HintPath>
     </Reference>
+    <Reference Include="20200613_CoreWpfControlLibrary1">
+      <HintPath>..\..\20200613_CoreWpfControlLibrary1\20200613_CoreWpfControlLibrary1\bin\Release\netcoreapp3.1\win-x64\20200613_CoreWpfControlLibrary1.dll</HintPath>
+    </Reference>
+    <Reference Include="20200613_CoreWpfControlLibrary2">
+      <HintPath>..\..\20200613_CoreWpfControlLibrary2\20200613_CoreWpfControlLibrary2\bin\x64\Debug\netcoreapp3.1\20200613_CoreWpfControlLibrary2.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreWpfControlLibrary1">
+      <HintPath>..\..\20200613_CoreApp\CoreWpfControlLibrary1\bin\Release\netcoreapp3.1\CoreWpfControlLibrary1.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

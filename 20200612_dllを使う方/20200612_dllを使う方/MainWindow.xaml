@@ -8,14 +8,29 @@
         xmlns:local2="clr-namespace:_20200612_WpfControlLibraryUpDown;assembly=20200612_WpfControlLibraryUpDown"
         xmlns:wpfApp="clr-namespace:_20200612_WpfApp1UpDown;assembly=20200612_WpfApp1UpDown"
         
+        xmlns:uc1="clr-namespace:_20200613_CoreWpfControlLibrary1;assembly=20200613_CoreWpfControlLibrary1"
+        xmlns:uc2="clr-namespace:_20200613_CoreWpfControlLibrary2;assembly=20200613_CoreWpfControlLibrary2"
+        
+        xmlns:uc3="clr-namespace:CoreWpfControlLibrary1;assembly=CoreWpfControlLibrary1"
+        
         mc:Ignorable="d"
         Title="MainWindow" Height="300" Width="400">
-    <Grid Margin="10">
+  <Grid Margin="10">
     <StackPanel>
-      <local2:UserControl1 Value="20"/>
-      <local2:UserControl2 Value="40"/>
-      <wpfApp:UserControl1 Value="120"/>
-      <wpfApp:UserControl2 Value="140"/>
+      <StackPanel Orientation="Horizontal">
+        <local2:UserControl1 Value="20"/>
+        <local2:UserControl2 Value="40"/>
+        <wpfApp:UserControl1 Value="120"/>
+        <wpfApp:UserControl2 Value="140"/>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <uc1:UserControl1 Value="210"/>
+        <uc2:UserControl1/>
+      </StackPanel>
+      <StackPanel>
+        <uc3:UserControl1/>
+        <uc3:UserControl2/>
+      </StackPanel>
     </StackPanel>
   </Grid>
 </Window>

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>_20200613_CoreApp</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="CoreWpfControlLibrary1">
+      <HintPath>..\CoreWpfControlLibrary1\bin\x64\Debug\netcoreapp3.1\CoreWpfControlLibrary1.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
