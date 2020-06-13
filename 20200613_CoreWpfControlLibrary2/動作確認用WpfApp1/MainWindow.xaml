@@ -6,10 +6,11 @@
         xmlns:local="clr-namespace:動作確認用WpfApp1"
         xmlns:uc="clr-namespace:_20200613_CoreWpfControlLibrary2;assembly=20200613_CoreWpfControlLibrary2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="200" Width="800">
     <Grid>
     <StackPanel>
       <uc:UserControl1/>
+      <uc:UserControl2/>
     </StackPanel>
     </Grid>
 </Window>

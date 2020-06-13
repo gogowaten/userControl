@@ -1,0 +1,27 @@
+﻿<Window x:Class="NumUpDown_20200613.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NumUpDown_20200613"
+        xmlns:my="clr-namespace:NumUpDownDLL_2020_0613;assembly=NumUpDownDLL_2020_0613"
+        
+        mc:Ignorable="d"
+        Title="MainWindow" Height="300" Width="400">
+    <Grid>
+    <StackPanel>
+      <StackPanel>
+      <TextBlock Text="textblock"/>
+        <my:UserControl1 Name="My1" Width="100" FontSize="20" Value="10"/>
+        <Button x:Name="ButtonSmall_01" Content="SmallChange" Click="ButtonSmall_01_Click"/>
+      </StackPanel>
+      <StackPanel>
+        <my:UserControl1 Value="-2.5"/>
+        <my:UserControl1 Value="-2"/>
+        <my:UserControl1 Value="0"/>
+        <my:UserControl1/>
+        
+      </StackPanel>
+    </StackPanel>
+    </Grid>
+</Window>
