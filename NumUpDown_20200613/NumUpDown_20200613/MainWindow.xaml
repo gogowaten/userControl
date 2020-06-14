@@ -21,7 +21,7 @@
     <StackPanel>
       <TextBlock x:Name="MyTextBlock" Text="textblock"/>
       <StackPanel>
-        <my:UserControl1 Name="My1" Width="200" FontSize="20" MyValue="10"/>
+        <my:UserControl1 Name="My1" Width="200" FontSize="20" MyValue="10" MyKetaInt="4" MyKetaDecimal="2"/>
         <Button x:Name="ButtonSmall_01" Content="SmallChange" Click="ButtonSmall_01_Click"/>
       </StackPanel>
       <StackPanel>
