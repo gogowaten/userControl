@@ -52,6 +52,10 @@ namespace NumUpDownDLL_2020_0613
 
 
 
+
+
+
+
         private void RepeatButtonUp_Click(object sender, RoutedEventArgs e)
         {
             this.Value += SmallChange;
