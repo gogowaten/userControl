@@ -31,5 +31,30 @@ namespace NumUpDown_20200613
         {
             My1.MySmallChange = 0.1m;
         }
+
+        private void ButtonSmall_02_Click(object sender, RoutedEventArgs e)
+        {
+            My1.MySmallChange = 1m;
+        }
+
+        private void ButtonMax_Click(object sender, RoutedEventArgs e)
+        {
+            My1.MyMaximum = 10;
+        }
+
+        private void ButtonMin_Click(object sender, RoutedEventArgs e)
+        {
+            My1.MyMinimum = -10;
+        }
+
+        private void ButtonSet10000_Click(object sender, RoutedEventArgs e)
+        {
+            My1.MyValue = 10000;
+        }
+
+        private void ButtonMin10000_Click(object sender, RoutedEventArgs e)
+        {
+            My1.MyMinimum = 10000;
+        }
     }
 }
