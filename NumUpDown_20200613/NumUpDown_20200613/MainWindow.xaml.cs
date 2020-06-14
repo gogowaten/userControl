@@ -23,11 +23,16 @@ namespace NumUpDown_20200613
         public MainWindow()
         {
             InitializeComponent();
+
+            double d = 20.5;
+            MyTextBlock.Text = d.ToString("000000.000");
+            decimal dc = 20m;
+            int i = (int)dc;
         }
 
         private void ButtonSmall_01_Click(object sender, RoutedEventArgs e)
         {
-            My1.SmallChange = 0.1m;
+            My1.MySmallChange = 0.1m;
         }
     }
 }

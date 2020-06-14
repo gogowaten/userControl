@@ -10,8 +10,8 @@
     <Viewbox>
       <TextBlock Text="text"/>
     </Viewbox>
-    <Viewbox>
-      <Polygon Points="0.5,0 1,1 0,1 0.5,0" Fill="MediumOrchid" Opacity="0.5"/>
+    <Viewbox Margin="20">
+      <Polygon Points="1,0 2,1 0,1 1,0" Fill="MediumOrchid" Opacity="0.5"/>
     </Viewbox>
   </Grid>
 </Window>

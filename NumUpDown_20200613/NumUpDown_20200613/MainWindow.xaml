@@ -7,21 +7,29 @@
         xmlns:my="clr-namespace:NumUpDownDLL_2020_0613;assembly=NumUpDownDLL_2020_0613"
         
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="400">
+        Title="MainWindow" Height="350" Width="400">
     <Grid>
     <StackPanel>
+      <TextBlock x:Name="MyTextBlock" Text="textblock"/>
       <StackPanel>
-      <TextBlock Text="textblock"/>
-        <my:UserControl1 Name="My1" Width="100" FontSize="20" Value="10"/>
+        <my:UserControl1 Name="My1" Width="200" FontSize="20" MyValue="10"/>
         <Button x:Name="ButtonSmall_01" Content="SmallChange" Click="ButtonSmall_01_Click"/>
       </StackPanel>
       <StackPanel>
-        <my:UserControl1 Value="-2.5"/>
-        <my:UserControl1 Value="-2"/>
-        <my:UserControl1 Value="0"/>
-        <my:UserControl1/>
-        
+        <my:UserControl1 Height="20" MyValue="-2.5"/>        
+        <my:UserControl1 Height="50" MyValue="0"/>
+        <my:UserControl1 Name="uc1"/>
+        <Separator Margin="8" Background="MediumVioletRed"/>
+        <Slider Value="{Binding ElementName=uc1, Path=MyValue}" Minimum="-10" Maximum="10"/>
+        <my:UserControl1  Height="20" MyValue="50"/>
       </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <my:UserControl1/>
+        <my:UserControl1 MyValue="100" Width="50"/>
+        <my:UserControl1 MyValue="100" Width="50" Height="30"/>
+      </StackPanel>
+      <my:UserControl1 Width="100"/>
+      <my:UserControl1 Width="200" Height="40" FontSize="20"/>
     </StackPanel>
     </Grid>
 </Window>

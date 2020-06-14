@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,65 +25,108 @@ namespace NumUpDownDLL_2020_0613
         public UserControl1()
         {
             InitializeComponent();
+
+            this.Loaded += UserControl1_Loaded;
         }
 
-        public decimal Value
+        private void UserControl1_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #region 依存プロパティ
+        public decimal MyValue
         {
             get => (decimal)GetValue(ValueProperty);
             set => SetValue(ValueProperty, value);
         }
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register(nameof(Value), typeof(decimal), typeof(UserControl1), new PropertyMetadata(0m));
+            DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(UserControl1), new PropertyMetadata(0m));
 
-        public decimal SmallChange
+
+        public decimal MySmallChange
         {
-            get => (decimal)GetValue(SmallChangeProperty);
-            set => SetValue(SmallChangeProperty, value);
+            get => (decimal)GetValue(MySmallChangeProperty);
+            set => SetValue(MySmallChangeProperty, value);
         }
-        public static readonly DependencyProperty SmallChangeProperty =
-            DependencyProperty.Register(nameof(SmallChange), typeof(decimal), typeof(UserControl1), new PropertyMetadata(1m));
+        public static readonly DependencyProperty MySmallChangeProperty =
+            DependencyProperty.Register(nameof(MySmallChange), typeof(decimal), typeof(UserControl1), new PropertyMetadata(1m));
 
 
-        public decimal LargeChange
+        public decimal MyLargeChange
         {
-            get => (decimal)GetValue(LargeChangeProperty);
-            set => SetValue(LargeChangeProperty, value);
+            get => (decimal)GetValue(MyLargeChangeProperty);
+            set => SetValue(MyLargeChangeProperty, value);
         }
-        public static readonly DependencyProperty LargeChangeProperty =
-            DependencyProperty.Register(nameof(LargeChange), typeof(decimal), typeof(UserControl1), new PropertyMetadata(10m));
+        public static readonly DependencyProperty MyLargeChangeProperty =
+            DependencyProperty.Register(nameof(MyLargeChange), typeof(decimal), typeof(UserControl1), new PropertyMetadata(10m));
 
 
+        public int MyKetaInt
+        {
+            get => (int)GetValue(MyKetaIntProperty);
+            set => SetValue(MyKetaIntProperty, value);
+        }
+        public static readonly DependencyProperty MyKetaIntProperty =
+                DependencyProperty.Register(nameof(MyKetaInt), typeof(int), typeof(UserControl1), new PropertyMetadata(1));
 
 
+        #endregion 依存プロパティ
 
 
+        #region クリックとかのイベント処理
 
         private void RepeatButtonUp_Click(object sender, RoutedEventArgs e)
         {
-            this.Value += SmallChange;
+            this.MyValue += MySmallChange;
         }
 
         private void RepeatButtonDown_Click(object sender, RoutedEventArgs e)
         {
-            this.Value -= SmallChange;
+            this.MyValue -= MySmallChange;
         }
 
         private void RepeatButton_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (e.Delta < 0)
             {
-                Value -= LargeChange;
+                MyValue -= MySmallChange;
             }
             else
             {
-                Value += LargeChange;
+                MyValue += MySmallChange;
             }
         }
 
         private void TextBox_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (e.Delta < 0) Value -= SmallChange;
-            else Value += SmallChange;
+            if (e.Delta < 0)
+            {
+                MyValue -= MyLargeChange;
+            }
+            else
+            {
+                MyValue += MyLargeChange;
+            }
+        }
+        #endregion クリックとかのイベント処理
+
+
+    }
+
+    public class MyConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            decimal v = (decimal)value;
+            //int keta = (int)parameter;
+            string str = "000.000";
+            return v.ToString(str);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

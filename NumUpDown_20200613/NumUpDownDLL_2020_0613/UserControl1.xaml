@@ -5,24 +5,39 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NumUpDownDLL_2020_0613"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="400">
+             d:DesignHeight="40" d:DesignWidth="200">
   <Grid>
+    <Grid.Resources>
+      <local:MyConverter x:Key="MyConverter"/>
+    </Grid.Resources>
     <Grid.RowDefinitions>
       <RowDefinition/>
       <RowDefinition/>
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>
-      <ColumnDefinition Width="0.3*"/>
+      <ColumnDefinition Width="20"/>
     </Grid.ColumnDefinitions>
-    
-    <RepeatButton Grid.Row="0" Grid.Column="1" Click="RepeatButtonUp_Click" MouseWheel="RepeatButton_MouseWheel"/>
-    <RepeatButton Grid.Row="1" Grid.Column="1" Click="RepeatButtonDown_Click" MouseWheel="RepeatButton_MouseWheel"/>
 
-    <TextBox Grid.RowSpan="2" Grid.Column="0"
+    <RepeatButton Grid.Row="0" Grid.Column="1" Click="RepeatButtonUp_Click" MouseWheel="RepeatButton_MouseWheel">
+      <RepeatButton.Content>
+        <Viewbox x:Name="ViewBoxUp" Margin="1">
+          <Polygon Points="1,0 2,1 0,1 1,0" Fill="Gray"/>
+        </Viewbox>
+      </RepeatButton.Content>
+    </RepeatButton>
+    <RepeatButton Grid.Row="1" Grid.Column="1" Click="RepeatButtonDown_Click" MouseWheel="RepeatButton_MouseWheel">
+      <RepeatButton.Content>
+        <Viewbox x:Name="ViewBoxDown" Margin="1">
+          <Polygon Points="0,0 2,0 1,1 0,0" Fill="Gray"/>
+        </Viewbox>
+      </RepeatButton.Content>
+    </RepeatButton>
+
+    <TextBox x:Name="MyTextBox" Grid.RowSpan="2" Grid.Column="0"
              TextAlignment="Right" VerticalContentAlignment="Center"
              MouseWheel="TextBox_MouseWheel"
-             Text="{Binding Value, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl1}}}"/>
+             Text="{Binding MyValue,Converter={StaticResource MyConverter},ConverterParameter={}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl1}}}"/>
 
   </Grid>
 </UserControl>
