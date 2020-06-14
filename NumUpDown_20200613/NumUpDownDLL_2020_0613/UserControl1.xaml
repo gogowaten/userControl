@@ -7,9 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="200">
   <Grid>
-    <Grid.Resources>
-      <local:MyConverter x:Key="MyConverter"/>
+    <Grid.Resources>      
+      <local:MyConverterMulti x:Key="MultiConverter"/>
     </Grid.Resources>
+    
     <Grid.RowDefinitions>
       <RowDefinition/>
       <RowDefinition/>
@@ -34,10 +35,17 @@
       </RepeatButton.Content>
     </RepeatButton>
 
+ 
     <TextBox x:Name="MyTextBox" Grid.RowSpan="2" Grid.Column="0"
              TextAlignment="Right" VerticalContentAlignment="Center"
-             MouseWheel="TextBox_MouseWheel"
-             Text="{Binding MyValue,Converter={StaticResource MyConverter},ConverterParameter={}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl1}}}"/>
-
+             MouseWheel="TextBox_MouseWheel">
+      <TextBox.Text>
+        <MultiBinding Converter="{StaticResource MultiConverter}">
+          <Binding Path="MyValue" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl1}}"/>
+          <Binding Path="MyKetaInt" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl1}}"/>
+          <Binding Path="MyKetaDecimal" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl1}}"/>
+        </MultiBinding>
+      </TextBox.Text>
+    </TextBox>
   </Grid>
 </UserControl>

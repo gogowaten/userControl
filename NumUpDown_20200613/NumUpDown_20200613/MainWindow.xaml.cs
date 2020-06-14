@@ -24,10 +24,7 @@ namespace NumUpDown_20200613
         {
             InitializeComponent();
 
-            double d = 20.5;
-            MyTextBlock.Text = d.ToString("000000.000");
-            decimal dc = 20m;
-            int i = (int)dc;
+          
         }
 
         private void ButtonSmall_01_Click(object sender, RoutedEventArgs e)

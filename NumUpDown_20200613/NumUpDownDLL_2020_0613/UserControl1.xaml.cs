@@ -62,13 +62,35 @@ namespace NumUpDownDLL_2020_0613
             DependencyProperty.Register(nameof(MyLargeChange), typeof(decimal), typeof(UserControl1), new PropertyMetadata(10m));
 
 
+        //表示桁数指定
+        //整数
         public int MyKetaInt
         {
             get => (int)GetValue(MyKetaIntProperty);
-            set => SetValue(MyKetaIntProperty, value);
+            set
+            {
+                if (value < 1)
+                    value = 1;
+                SetValue(MyKetaIntProperty, value);
+            }
         }
         public static readonly DependencyProperty MyKetaIntProperty =
                 DependencyProperty.Register(nameof(MyKetaInt), typeof(int), typeof(UserControl1), new PropertyMetadata(1));
+        
+        //小数点以下
+        public int MyKetaDecimal
+        {
+            get => (int)GetValue(MyKetaDecimalProperty);
+            set
+            {
+                if (value < 0) value = 0;
+                SetValue(MyKetaDecimalProperty, value);
+            }
+        }
+        public static readonly DependencyProperty MyKetaDecimalProperty =
+                DependencyProperty.Register(nameof(MyKetaDecimal), typeof(int), typeof(UserControl1), new PropertyMetadata(0));
+
+
 
 
         #endregion 依存プロパティ
@@ -114,17 +136,26 @@ namespace NumUpDownDLL_2020_0613
 
     }
 
-    public class MyConverter : IValueConverter
+
+
+    //数値を文字列に変換するときに、指定桁数で変換する用
+    public class MyConverterMulti : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            decimal v = (decimal)value;
-            //int keta = (int)parameter;
-            string str = "000.000";
-            return v.ToString(str);
+            decimal d = (decimal)values[0];//数値
+            int i = (int)values[1];//整数の表示桁数
+            int f = (int)values[2];//小数点以下の表示桁数
+
+            //            文字列を指定回数繰り返した文字列を取得する - .NET Tips(VB.NET, C#...)
+            //https://dobon.net/vb/dotnet/string/repeat.html
+            //書式設定
+            string str = new string('0', i) + "." + new string('0', f);
+
+            return d.ToString(str);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

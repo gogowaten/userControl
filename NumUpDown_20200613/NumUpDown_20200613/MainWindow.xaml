@@ -7,8 +7,17 @@
         xmlns:my="clr-namespace:NumUpDownDLL_2020_0613;assembly=NumUpDownDLL_2020_0613"
         
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="400">
+        Title="MainWindow" Height="500" Width="500">
     <Grid>
+    <Grid.Resources>
+      <Style TargetType="StackPanel">
+        <Setter Property="Margin" Value="4"/>
+      </Style>
+      <Style TargetType="my:UserControl1">
+        <Setter Property="Margin" Value="4"/>
+      </Style>
+      
+    </Grid.Resources>
     <StackPanel>
       <TextBlock x:Name="MyTextBlock" Text="textblock"/>
       <StackPanel>
@@ -19,7 +28,9 @@
         <my:UserControl1 Height="20" MyValue="-2.5"/>        
         <my:UserControl1 Height="50" MyValue="0"/>
         <my:UserControl1 Name="uc1"/>
-        <Separator Margin="8" Background="MediumVioletRed"/>
+        
+        <Separator Margin="8" Background="MediumTurquoise"/>
+        
         <Slider Value="{Binding ElementName=uc1, Path=MyValue}" Minimum="-10" Maximum="10"/>
         <my:UserControl1  Height="20" MyValue="50"/>
       </StackPanel>
@@ -29,7 +40,7 @@
         <my:UserControl1 MyValue="100" Width="50" Height="30"/>
       </StackPanel>
       <my:UserControl1 Width="100"/>
-      <my:UserControl1 Width="200" Height="40" FontSize="20"/>
+      <my:UserControl1 Width="200" Height="40" FontSize="20" MyKetaInt="2" MyKetaDecimal="1"/>
     </StackPanel>
     </Grid>
 </Window>
