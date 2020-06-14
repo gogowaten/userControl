@@ -37,7 +37,7 @@
     <TextBox x:Name="MyTextBox" Grid.RowSpan="2" Grid.Column="0"
              TextAlignment="Right" VerticalContentAlignment="Center"
              MouseWheel="TextBox_MouseWheel"
-             Text="{Binding MyValue,Converter={StaticResource MyConverter},ConverterParameter={}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl1}}}"/>
+             Text="{Binding MyValue,Converter={StaticResource MyConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl1}}}"/>
 
   </Grid>
 </UserControl>
