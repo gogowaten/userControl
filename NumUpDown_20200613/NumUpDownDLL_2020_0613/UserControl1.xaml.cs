@@ -11,6 +11,8 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -26,7 +28,38 @@ namespace NumUpDownDLL_2020_0613
         {
             InitializeComponent();
 
-            this.Loaded += UserControl1_Loaded;
+
+            SetMultiBinding();
+        }
+
+        //XAMLのほうでも設定しているけど、それを上書きする
+        //違うところは1箇所だけで、ConverterParameterに自身を渡しているところ
+        //これはTextBoxに数値以外が入力されたときに使う
+        private void SetMultiBinding()
+        {
+            var mb = new MultiBinding();
+            mb.Converter = new MyConverterMulti();
+            mb.ConverterParameter = this;//ここをXAMLでの書き方が分かれば、このメソッドは必要ない
+
+            var b = new Binding();
+            b.Source = this;
+            b.Path = new PropertyPath(MyValueProperty);
+            b.Mode = BindingMode.TwoWay;
+            mb.Bindings.Add(b);
+
+            b = new Binding();
+            b.Source = this;
+            b.Path = new PropertyPath(MyKetaIntProperty);
+            b.Mode = BindingMode.TwoWay;
+            mb.Bindings.Add(b);
+
+            b = new Binding();
+            b.Source = this;
+            b.Path = new PropertyPath(MyKetaDecimalProperty);
+            b.Mode = BindingMode.TwoWay;
+            mb.Bindings.Add(b);
+
+            MyTextBox.SetBinding(TextBox.TextProperty, mb);
         }
 
         private void UserControl1_Loaded(object sender, RoutedEventArgs e)
@@ -57,7 +90,7 @@ namespace NumUpDownDLL_2020_0613
             DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(UserControl1),
                 new PropertyMetadata(0m));
 
-        
+
 
         public decimal MySmallChange
         {
@@ -108,8 +141,8 @@ namespace NumUpDownDLL_2020_0613
 
         #region 最小値と最大値
         //かなり難しかった
-//        依存関係プロパティのコールバックと検証 - WPF | Microsoft Docs
-//https://docs.microsoft.com/ja-jp/dotnet/framework/wpf/advanced/dependency-property-callbacks-and-validation
+        //        依存関係プロパティのコールバックと検証 - WPF | Microsoft Docs
+        //https://docs.microsoft.com/ja-jp/dotnet/framework/wpf/advanced/dependency-property-callbacks-and-validation
 
         //最小値が変更されたとき、今の値より大きい値が最小値として設定されたときは、今の値を最小値に変更する
         //最小値：-100、今の値：-20だったとして、新たに最小値が-10に変更されとき、そのままだと
@@ -161,7 +194,7 @@ namespace NumUpDownDLL_2020_0613
             var uc = (UserControl1)obj;
             var min = (decimal)value;
             if (min > uc.MyMaximum) min = uc.MyMaximum;
-            
+
             return min;
         }
 
@@ -267,7 +300,55 @@ namespace NumUpDownDLL_2020_0613
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            var uc = (UserControl1)parameter;
+            string str = (string)value;
+            decimal d;
+            object[] obj;
+
+            if (decimal.TryParse(str, out d))
+            {
+                if (d > uc.MyMaximum) d = uc.MyMaximum;
+                if (d < uc.MyMinimum) d = uc.MyMinimum;
+                obj = new object[3] { d, uc.MyKetaInt, uc.MyKetaDecimal };
+            }
+            else
+            {
+                obj = new object[3] { uc.MyValue, uc.MyKetaInt, uc.MyKetaDecimal };
+            }
+            return obj;
+
+            //string str = (string)value;
+            //decimal d;
+            //object[] obj;
+            //try
+            //{
+            //    d = decimal.Parse(str);
+            //}
+            //catch (Exception e)
+            //{
+            //    throw new ArgumentException();                
+            //}
+            //var uc = (UserControl1)parameter;
+            //obj = new object[3] { d, uc.MyKetaInt, uc.MyKetaDecimal };
+            //return obj;
+
+            //throw new NotImplementedException();
         }
     }
+
+    //public class MyValidationRule : ValidationRule
+    //{
+    //    public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+    //    {
+    //        string str = (string)value;
+    //        if(decimal.TryParse(str,out decimal d))
+    //        {
+    //            return new ValidationResult(true, null);
+    //        }
+    //        else
+    //        {
+    //            return new ValidationResult(false, "not decimal");
+    //        }
+    //    }
+    //}
 }

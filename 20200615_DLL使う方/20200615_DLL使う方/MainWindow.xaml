@@ -6,67 +6,81 @@
         xmlns:local="clr-namespace:_20200615_DLL使う方"
         xmlns:my="clr-namespace:NumUpDownDLL_2020_0613;assembly=NumUpDownDLL_2020_0613"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="614">
   <Grid>
     <Grid.Resources>
       <Style TargetType="StackPanel">
         <Setter Property="Margin" Value="4"/>
       </Style>
+      <Style TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+      </Style>
     </Grid.Resources>
-    <StackPanel>
-      <StackPanel.Resources>
-        <Style TargetType="TextBlock">
-          <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-      </StackPanel.Resources>
 
-      <my:UserControl1 Name="main" Width="200" Height="50" FontSize="30"/>
-      <StackPanel Orientation="Horizontal">
-        <StackPanel>
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Width="/>
-            <my:UserControl1 MyValue="{Binding ElementName=main, Path=Width, Mode=TwoWay}" MyMaximum="1000"/>
-          </StackPanel>
-          <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="Height="/>
-            <my:UserControl1 MyValue="{Binding ElementName=main, Path=Height, Mode=TwoWay}"/>
-          </StackPanel>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="1.5*"/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+
+    <my:UserControl1 Name="main" Width="200" Height="50" FontSize="30"
+                     MyValue="1234.56" MyKetaDecimal="2"/>
+    
+    <StackPanel Grid.Column="1" Orientation="Horizontal">
+
+
+
+      <StackPanel>
+        <StackPanel.Resources>
+          <Style TargetType="StackPanel">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="4"/>
+          </Style>
+        </StackPanel.Resources>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="Width="/>
+          <my:UserControl1 MyValue="{Binding ElementName=main, Path=Width, Mode=TwoWay}" MyMaximum="1000"/>
         </StackPanel>
-        <StackPanel>
-          <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="MySmallChange="/>
-            <my:UserControl1 MyValue="{Binding ElementName=main, Path=MySmallChange, Mode=TwoWay}" MySmallChange="0.1" MyKetaDecimal="1"/>
-          </StackPanel>
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Text="MyLargeChange="/>
-            <my:UserControl1 MyValue="{Binding ElementName=main, Path=MyLargeChange, Mode=TwoWay}" MySmallChange="0.1" MyKetaDecimal="1"/>
-          </StackPanel>
-        </StackPanel>
-        <StackPanel>
-          <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock Text="MyKetaInt="/>
-            <my:UserControl1 MyValue="{Binding ElementName=main, Path=MyKetaInt, Mode=TwoWay}"/>
-          </StackPanel>
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Text="MyKetaDecimal="/>
-            <my:UserControl1 MyValue="{Binding ElementName=main, Path=MyKetaDecimal, Mode=TwoWay}"/>
-          </StackPanel>
-        </StackPanel>
-
-      </StackPanel>
-      <StackPanel Orientation="Horizontal">
-        <Slider Value="{Binding ElementName=main, Path=MyValue}"/>
-
-
         <StackPanel Orientation="Horizontal">
           <TextBlock Text="Height="/>
           <my:UserControl1 MyValue="{Binding ElementName=main, Path=Height, Mode=TwoWay}"/>
         </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="FontSize="/>
+          <my:UserControl1 MyValue="{Binding ElementName=main, Path=FontSize, Mode=TwoWay}"/>
+        </StackPanel>
 
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="MySmallChange="/>
+          <my:UserControl1 MyValue="{Binding ElementName=main, Path=MySmallChange, Mode=TwoWay}" MySmallChange="0.1" MyKetaDecimal="1"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="MyLargeChange="/>
+          <my:UserControl1 MyValue="{Binding ElementName=main, Path=MyLargeChange, Mode=TwoWay}" MySmallChange="1"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="MyKetaInt="/>
+          <my:UserControl1 MyValue="{Binding ElementName=main, Path=MyKetaInt, Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="MyKetaDecimal="/>
+          <my:UserControl1 MyValue="{Binding ElementName=main, Path=MyKetaDecimal, Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="MyValue="/>
+          <my:UserControl1 MyValue="{Binding ElementName=main, Path=MyValue, Mode=TwoWay}"/>
+        </StackPanel>
       </StackPanel>
 
+    </StackPanel>
 
-      
+
+    <StackPanel>
+
+
+
+
+
+
 
     </StackPanel>
   </Grid>

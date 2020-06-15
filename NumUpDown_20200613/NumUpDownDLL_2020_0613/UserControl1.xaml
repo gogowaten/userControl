@@ -6,11 +6,12 @@
              xmlns:local="clr-namespace:NumUpDownDLL_2020_0613"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="200">
+
   <Grid>
-    <Grid.Resources>      
+    <Grid.Resources>
       <local:MyConverterMulti x:Key="MultiConverter"/>
     </Grid.Resources>
-    
+
     <Grid.RowDefinitions>
       <RowDefinition/>
       <RowDefinition/>
@@ -35,7 +36,7 @@
       </RepeatButton.Content>
     </RepeatButton>
 
- 
+
     <TextBox x:Name="MyTextBox" Grid.RowSpan="2" Grid.Column="0"
              TextAlignment="Right" VerticalContentAlignment="Center"
              MouseWheel="TextBox_MouseWheel">
