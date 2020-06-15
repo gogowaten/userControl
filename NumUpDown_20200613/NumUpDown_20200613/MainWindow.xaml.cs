@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using NumUpDownDLL_2020_0613;
 
 namespace NumUpDown_20200613
 {
@@ -24,7 +25,10 @@ namespace NumUpDown_20200613
         {
             InitializeComponent();
 
-          
+            //var b = new Binding();
+            //b.Source = My1;
+            //b.Path = new PropertyPath(WidthProperty);
+            //MyDouble.SetBinding(UserControl1.MyValueProperty, b);
         }
 
         private void ButtonSmall_01_Click(object sender, RoutedEventArgs e)

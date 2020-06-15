@@ -42,7 +42,7 @@ namespace NumUpDownDLL_2020_0613
         {
             get
             {
-                return (decimal)GetValue(ValueProperty);
+                return (decimal)GetValue(MyValueProperty);
             }
 
             set
@@ -50,10 +50,10 @@ namespace NumUpDownDLL_2020_0613
                 //‚±‚±‚ÅÅ¬’lÅ‘å’l‚Ì”»’è
                 if (value > MyMaximum) value = MyMaximum;
                 if (value < MyMinimum) value = MyMinimum;
-                SetValue(ValueProperty, value);
+                SetValue(MyValueProperty, value);
             }
         }
-        public static readonly DependencyProperty ValueProperty =
+        public static readonly DependencyProperty MyValueProperty =
             DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(UserControl1),
                 new PropertyMetadata(0m));
 

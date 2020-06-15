@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>_20200615_DLL使う方</RootNamespace>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="NumUpDownDLL_2020_0613">
+      <HintPath>..\..\NumUpDown_20200613\NumUpDownDLL_2020_0613\bin\Release\netcoreapp3.1\NumUpDownDLL_2020_0613.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
