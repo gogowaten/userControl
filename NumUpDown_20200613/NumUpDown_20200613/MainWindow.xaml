@@ -19,8 +19,7 @@
         <my:UserControl1 Value="-2.5"/>
         <my:UserControl1 Value="-2"/>
         <my:UserControl1 Value="0"/>
-        <my:UserControl1/>
-        
+        <my:UserControl1/>        
       </StackPanel>
     </StackPanel>
     </Grid>
