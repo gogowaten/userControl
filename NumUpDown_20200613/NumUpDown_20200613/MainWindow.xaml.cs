@@ -29,6 +29,11 @@ namespace NumUpDown_20200613
             //b.Source = My1;
             //b.Path = new PropertyPath(WidthProperty);
             //MyDouble.SetBinding(UserControl1.MyValueProperty, b);
+
+            
+            string str = "1234.5678";
+            string ss= string.Format("{0:00000.00000}", 1123.0);
+            MyTextBlock.Text = string.Format("{0,5}",str);
         }
 
         private void ButtonSmall_01_Click(object sender, RoutedEventArgs e)
@@ -59,6 +64,14 @@ namespace NumUpDown_20200613
         private void ButtonMin10000_Click(object sender, RoutedEventArgs e)
         {
             My1.MyMinimum = 10000;
+        }
+
+        private void ButtonTest_Click(object sender, RoutedEventArgs e)
+        {
+            var inu = uc2.MyStringFormat;
+            uc2.MyKetaFront = 4;
+            uc2.MyKetaRear = 4;
+            var neko = uc2.MyStringFormat;
         }
     }
 }
