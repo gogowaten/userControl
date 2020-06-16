@@ -35,7 +35,7 @@
         <Button x:Name="ButtonMin" Content="Minimum = -10" Click="ButtonMin_Click"/>
         <Button x:Name="ButtonMin10000" Content="Min = 10000" Click="ButtonMin10000_Click"/>
         <my:UserControl1 Name="MyDouble" MyMaximum="2000" MyValue="{Binding ElementName=My1, Path=Width, Mode=TwoWay}"/>
-        <!--<my:UserControl1 MyMaximum="2000" MyValue="{Binding ElementName=My1, Path=MyValue, Mode=TwoWay}"/>-->
+        
       </StackPanel>
       <!--<StackPanel>
         <my:UserControl1 Height="20" MyValue="-2.5"/>        
