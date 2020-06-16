@@ -1,0 +1,18 @@
+﻿<Window x:Class="_20200616_textbox.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_20200616_textbox"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="200" Width="400">
+  <Grid>
+    <StackPanel>
+      <TextBox x:Name="MyTextBox" Text="50" InputMethod.IsInputMethodSuspended="True"
+               PreviewTextInput="MyTextBox_PreviewTextInput"/>
+      <TextBox Text="50" InputMethod.IsInputMethodEnabled="False"/>
+      <TextBox Text="50"/>
+      
+    </StackPanel>
+  </Grid>
+</Window>
