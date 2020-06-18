@@ -36,19 +36,19 @@
     <StackPanel Grid.Column="1">
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="width"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=Width, Mode=TwoWay}" MyKetaRear="1"/>
+        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=Width}" MyKetaRear="1"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="height"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=Height, Mode=TwoWay}" MyKetaRear="1"/>
+        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=Height}" MyKetaRear="1"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="整数桁"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyKetaFront, Mode=TwoWay}" MyLargeChange="1"/>
+        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyKetaFront}" MyLargeChange="1"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
-        <TextBlock Text="少数桁"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyKetaRear, Mode=TwoWay}" MyLargeChange="1"/>
+        <TextBlock Text="小数桁"/>
+        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyKetaRear}" MyLargeChange="1"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="value"/>
@@ -56,7 +56,7 @@
       </StackPanel>
       
       <TextBlock x:Name="MyTextBlock" Text="textblock"/>
-    
+      <my:UserControl2 MyValue="20" MyStringFormat="C"/>
       <Button x:Name="ButtonTest" Content="test" Click="ButtonTest_Click"/>
       <WrapPanel Orientation="Horizontal">
         <my:UserControl1 Name="My1" Width="200" FontSize="20"

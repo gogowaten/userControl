@@ -66,7 +66,11 @@ namespace NumUpDownDLL_2020_0613
 
         }
 
-
+        //        wpf - 標準依存プロパティ | wpf Tutorial
+        //https://riptutorial.com/ja/wpf/example/9857/%E6%A8%99%E6%BA%96%E4%BE%9D%E5%AD%98%E3%83%97%E3%83%AD%E3%83%91%E3%83%86%E3%82%A3
+        //より
+        //バインドでMode=TwoWay （ TextBox.Textの動作に類似）を指定する必要性を排除するには、 
+        //PropertyMetadata代わりにFrameworkPropertyMetadataを使用し、適切なフラグを指定するようにコードを更新します。
         public decimal MyValue
         {
             get
@@ -81,7 +85,12 @@ namespace NumUpDownDLL_2020_0613
         }
         public static readonly DependencyProperty MyValueProperty =
             DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(UserControl2),
-                new PropertyMetadata(0m));
+                new FrameworkPropertyMetadata(0m, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        //↑Binding.Modeの既定値がTwoWayになる
+        //↓
+        //public static readonly DependencyProperty MyValueProperty =
+        //    DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(UserControl2),
+        //        new PropertyMetadata(0m));
 
 
         public decimal MySmallChange
@@ -112,10 +121,7 @@ namespace NumUpDownDLL_2020_0613
         public int MyKetaFront
         {
             get => (int)GetValue(MyKetaFrontProperty);
-            set
-            {
-                SetValue(MyKetaFrontProperty, value);
-            }
+            set => SetValue(MyKetaFrontProperty, value);
         }
         public static readonly DependencyProperty MyKetaFrontProperty =
             DependencyProperty.Register(nameof(MyKetaFront), typeof(int), typeof(UserControl2), new PropertyMetadata(1, OnMyF1Changed));
@@ -152,10 +158,7 @@ namespace NumUpDownDLL_2020_0613
         public int MyKetaRear
         {
             get => (int)GetValue(MyKetaRearProperty);
-            set
-            {
-                SetValue(MyKetaRearProperty, value);
-            }
+            set => SetValue(MyKetaRearProperty, value);
         }
         public static readonly DependencyProperty MyKetaRearProperty =
             DependencyProperty.Register(nameof(MyKetaRear), typeof(int), typeof(UserControl2), new PropertyMetadata(0, OnMyF2Changed));
