@@ -9,11 +9,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="614">
   <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition/>
-      <ColumnDefinition Width="250"/>
-    </Grid.ColumnDefinitions>
-
+    <Grid.RowDefinitions>
+      <RowDefinition Height="0.5*"/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
     <Grid.Resources>
       <Style TargetType="StackPanel">
         <Setter Property="Margin" Value="4"/>
@@ -23,7 +22,7 @@
       </Style>
       <Style TargetType="TextBlock">
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Margin" Value="0,0,5,0"/>        
+        <Setter Property="Margin" Value="0,0,5,0"/>
         <Setter Property="Width" Value="50"/>
       </Style>
       <Style TargetType="my:UserControl2">
@@ -35,71 +34,77 @@
                      MyValue="-12.34" MyKetaFront="3" MyKetaRear="3"
                      MyMin="-20" MyMax="100"
                      MySmallChange="1" MyLargeChange="10"/>
-    
-    <StackPanel Grid.Column="1">
-      <StackPanel Orientation="Horizontal">
-        <TextBlock Text="整数桁"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyKetaFront}" MyLargeChange="1"/>
-      </StackPanel>
-      <StackPanel Orientation="Horizontal">
-        <TextBlock Text="小数桁"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyKetaRear}" MyLargeChange="1"/>
-      </StackPanel>
-      <StackPanel Orientation="Horizontal">
-        <TextBlock Text="最小値"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyMin}" MyLargeChange="1"/>
-      </StackPanel>
-      <StackPanel Orientation="Horizontal">
-        <TextBlock Text="最大値"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyMax}" MyLargeChange="1"/>
-      </StackPanel>
-      <StackPanel Orientation="Horizontal">
-        <TextBlock Text="小変更"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MySmallChange}" MyLargeChange="1"/>
-      </StackPanel>
-      <StackPanel Orientation="Horizontal">
-        <TextBlock Text="大変更"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyLargeChange}" MyLargeChange="1"/>
-      </StackPanel>
-      <StackPanel Orientation="Horizontal">
-        <TextBlock Text="width"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=Width}" MyKetaRear="1"/>
-      </StackPanel>
-      <StackPanel Orientation="Horizontal">
-        <TextBlock Text="height"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=Height}" MyKetaRear="1"/>
-      </StackPanel>
-      <StackPanel Orientation="Horizontal">
-        <TextBlock Text="fontsize"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=FontSize}" MyKetaRear="1"/>
+
+    <DockPanel Grid.Row="1">
+      <StackPanel Grid.Row="1">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="整数桁"/>
+          <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyKetaFront}" MyLargeChange="1"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="小数桁"/>
+          <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyKetaRear}" MyLargeChange="1"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="最小値"/>
+          <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyMin}" MyLargeChange="1"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="最大値"/>
+          <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyMax}" MyLargeChange="1"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="小変更"/>
+          <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MySmallChange}" MyLargeChange="1" MySmallChange="0.1" MyKetaRear="1"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="大変更"/>
+          <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyLargeChange}" MyLargeChange="10" MySmallChange="1"/>
+        </StackPanel>
       </StackPanel>
 
-      <StackPanel Orientation="Horizontal">
-        <TextBlock Text="value"/>
-        <TextBlock Text="{Binding ElementName=uc2, Path=MyValue}" Background="LightGray" TextAlignment="Right" Width="auto" Padding="2"/>
+      <StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="width"/>
+          <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=Width}" MyKetaRear="1"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="height"/>
+          <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=Height}" MyKetaRear="1"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="fontsize"/>
+          <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=FontSize}" MyKetaRear="1"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="value"/>
+          <TextBlock Text="{Binding ElementName=uc2, Path=MyValue}" Background="LightGray" TextAlignment="Right" Width="auto" Padding="2"/>
+        </StackPanel>
       </StackPanel>
-      
-      <TextBlock x:Name="MyTextBlock" Text="textblock"/>
-      <my:UserControl2 MyValue="20" MyStringFormat="C"/>
-      <Button x:Name="ButtonTest" Content="test" Click="ButtonTest_Click"/>
-      <WrapPanel Orientation="Horizontal">
-        <my:UserControl1 Name="My1" Width="200" FontSize="20"
+
+      <StackPanel>
+        <TextBlock x:Name="MyTextBlock" Text="textblock"/>
+        <my:UserControl2 MyValue="20" MyStringFormat="C"/>
+        <Button x:Name="ButtonTest" Content="test" Click="ButtonTest_Click"/>
+        <WrapPanel Orientation="Horizontal">
+          <my:UserControl1 Name="My1" Width="200" FontSize="20"
                          MyValue="500" MyKetaDecimal="1" MyMinimum="-110" MyMaximum="1000"/>
 
-        <Button x:Name="ButtonSmall_01" Content="SmallChange 0.1" Click="ButtonSmall_01_Click"/>
-        <Button x:Name="ButtonSmall_02" Content="SmallChange 1" Click="ButtonSmall_02_Click"/>
-        <Button x:Name="ButtonMax" Content="Maximum = 10" Click="ButtonMax_Click"/>
-        <Button x:Name="ButtonSet10000" Content="Value = 10000" Click="ButtonSet10000_Click"/>
-      </WrapPanel>
-      <WrapPanel Orientation="Horizontal">
-        <TextBox Text="text" Foreground="Red" Background="Pink" BorderBrush="Red"/>
-        <RepeatButton BorderBrush="Red" Content="tepeat"/>
-        <Button x:Name="ButtonMin" Content="Minimum = -10" Click="ButtonMin_Click"/>
-        <Button x:Name="ButtonMin10000" Content="Min = 10000" Click="ButtonMin10000_Click"/>
-        <my:UserControl1 Name="MyDouble" MyMaximum="2000" MyValue="{Binding ElementName=My1, Path=Width, Mode=TwoWay}"/>
+          <Button x:Name="ButtonSmall_01" Content="SmallChange 0.1" Click="ButtonSmall_01_Click"/>
+          <Button x:Name="ButtonSmall_02" Content="SmallChange 1" Click="ButtonSmall_02_Click"/>
+          <Button x:Name="ButtonMax" Content="Maximum = 10" Click="ButtonMax_Click"/>
+          <Button x:Name="ButtonSet10000" Content="Value = 10000" Click="ButtonSet10000_Click"/>
+        </WrapPanel>
+        <WrapPanel Orientation="Horizontal">
+          <TextBox Text="text" Foreground="Red" Background="Pink" BorderBrush="Red"/>
+          <RepeatButton BorderBrush="Red" Content="repeat"/>
+          <Button x:Name="ButtonMin" Content="Minimum = -10" Click="ButtonMin_Click"/>
+          <Button x:Name="ButtonMin10000" Content="Min = 10000" Click="ButtonMin10000_Click"/>
+          <my:UserControl1 Name="MyDouble" MyMaximum="2000" MyValue="{Binding ElementName=My1, Path=Width, Mode=TwoWay}"/>
 
-      </WrapPanel>
-      <!--<StackPanel>
+        </WrapPanel>
+        <!--<StackPanel>
         <my:UserControl1 Height="20" MyValue="-2.5"/>        
         <my:UserControl1 Height="50" MyValue="0"/>
         <my:UserControl1 Name="uc1"/>
@@ -116,6 +121,8 @@
       </StackPanel>
       <my:UserControl1 Width="100"/>
       <my:UserControl1 Width="200" Height="40" FontSize="20" MyKetaInt="2" MyKetaDecimal="1"/>-->
-    </StackPanel>
+      </StackPanel>
+
+    </DockPanel>
   </Grid>
 </Window>
