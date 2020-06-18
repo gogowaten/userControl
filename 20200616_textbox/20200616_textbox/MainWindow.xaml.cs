@@ -66,15 +66,15 @@ namespace _20200616_textbox
 
         private void MyTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            //ピリオドとマイナス記号は1個
-            //マイナス記号の位置は先頭
+            //ピリオドとハイフンは1個
+            //ハイフンの位置は先頭
             //ピリオドの位置は先頭と末尾以外
             var tbox = (TextBox)sender;
             string str = tbox.Text;//文字列
             var txt = e.Text;//入力された文字
 
             bool neko;
-            //入力文字が数値とピリオド、マイナス記号以外だったら無効にして、終了
+            //入力文字が数値とピリオド、ハイフン以外だったら無効にして、終了
             neko = new Regex("[0-9.-]").IsMatch(txt);
             if (neko == false)
             {
@@ -82,10 +82,10 @@ namespace _20200616_textbox
                 return;//終了
             }
 
-            //マイナス記号が先頭以外に入力なら無効にして終了
+            //ハイフンが先頭以外に入力なら無効にして終了
             if (txt == "-" && tbox.CaretIndex != 0) { e.Handled = true; return; }
 
-            //マイナス記号があるのに、さらに入力なら無効にして終了
+            //ハイフンがあるのに、さらに入力なら無効にして終了
             neko = str.Contains("-");
             if (neko == true && txt == "-") { e.Handled = true; return; }
 
