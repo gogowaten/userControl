@@ -23,7 +23,7 @@ namespace NumUpDownDLL_2020_0613
         {
             InitializeComponent();
 
-           
+
             //MyValueと表示入力用のTextBoxとのBinding
             var mb = new MultiBinding();
             mb.Converter = new MyStringConverter();
@@ -269,44 +269,71 @@ namespace NumUpDownDLL_2020_0613
         }
 
 
+
         #endregion クリックとかのイベント処理
 
-      
+        #region 数字入力制限
+        private void MyTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var textbox = (TextBox)sender;
+            string str = textbox.Text;//文字列
+            var inputStr = e.Text;//入力された文字
+
+            //正規表現で入力文字の判定、数字とピリオド、ハイフンならtrue
+            bool neko = new System.Text.RegularExpressions.Regex("[0-9.-]").IsMatch(inputStr);
+
+            //入力文字が数値とピリオド、ハイフン以外だったら無効
+            if (neko == false)
+            {
+                e.Handled = true;//無効
+                return;//終了
+            }
+
+            //キャレット(カーソル)位置が先頭(0)じゃないときの、ハイフン入力は無効
+            if (textbox.CaretIndex != 0 && inputStr == "-") { e.Handled = true; return; }
+
+            //2つ目のハイフン入力は無効(全選択時なら許可)
+            if (textbox.SelectedText != str)
+            {
+                if (str.Contains("-") && inputStr == "-") { e.Handled = true; return; }
+            }
+
+            //2つ目のピリオド入力は無効
+            if (str.Contains(".") && inputStr == ".") { e.Handled = true; return; }
+        }
+
+        private void MyTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            //ピリオドの削除
+            //先頭か末尾にあった場合は削除
+            var tb = (TextBox)sender;
+            string text = tb.Text;
+            if (text.StartsWith('.') || text.EndsWith('.'))
+            {
+                text = text.Replace(".", "");
+            }
+
+            // -. も変なのでピリオドだけ削除
+            text = text.Replace("-.", "-");
+
+            //数値がないのにハイフンやピリオドがあった場合は削除
+            if (text == "-" || text == ".")
+                text = "";
+
+            tb.Text = text;
+        }
+
+        private void MyTextBox_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            //貼り付け無効
+            if (e.Command == ApplicationCommands.Paste)
+            {
+                e.Handled = true;
+            }
+        }
+        #endregion 数字入力制限
     }
 
-
-    //public class MyFormatConverter : IMultiValueConverter
-    //{
-    //    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        int i1 = (int)values[0];
-    //        int i2 = (int)values[1];
-    //        string format = new string('0', i1) + '.' + new string('0', i2);
-    //        return format;
-    //    }
-
-    //    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-    //    {
-    //        string str = (string)value;
-    //        int i = str.IndexOf('.');
-    //        int l = str.Length;
-
-    //        int front, rear;
-    //        if (i == -1)
-    //        {
-    //            front = 0;
-    //            rear = 0;
-    //        }
-    //        else
-    //        {
-    //            front = i - 1;
-    //            rear = l - i;
-    //        }
-    //        return new object[] { front, rear };
-
-    //        //throw new NotImplementedException();
-    //    }
-    //}
 
     public class MyStringConverter : IMultiValueConverter
     {
@@ -321,6 +348,8 @@ namespace NumUpDownDLL_2020_0613
         {
             //UserControl2 uc2 = (UserControl2)parameter;
             string f = (string)value;
+            if (f == "")
+                f = "0";
             decimal d = decimal.Parse(f);
 
             return new object[] { d };

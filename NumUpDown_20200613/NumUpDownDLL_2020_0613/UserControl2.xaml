@@ -41,7 +41,11 @@
     <TextBox Grid.RowSpan="2" Grid.Column="0"
              Name="MyTextBox"
              TextAlignment="Right" VerticalContentAlignment="Center"
-             MouseWheel="TextBox_MouseWheel">
+             MouseWheel="TextBox_MouseWheel"
+             InputMethod.IsInputMethodSuspended="True"
+             PreviewTextInput="MyTextBox_PreviewTextInput"
+             LostFocus="MyTextBox_LostFocus"
+             CommandManager.PreviewExecuted="MyTextBox_PreviewExecuted">
 
       <TextBox.Text>
         <MultiBinding Converter="{StaticResource MyConv}" Mode="TwoWay">
