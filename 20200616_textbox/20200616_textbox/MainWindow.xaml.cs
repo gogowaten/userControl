@@ -59,6 +59,8 @@ namespace _20200616_textbox
 
 //        Visual Studio / WPF > link > TextBoxに数値しか入力できなくする > PreviewTextInput使用 | e.Handled = true; - Qiita
 //https://qiita.com/7of9/items/04793406f94d229a6c4d
+//          C# WPF 数値のみ入力できるTextBoxを作る - 備忘録
+//https://kagasu.hatenablog.com/entry/2017/02/14/155824
 //            TextBoxに数値のみを入力する[C# WPF]
 //https://vdlz.xyz/Csharp/WPF/Control/EditableControl/TextBox/TextBoxNumberOnly.html
 //            [Tips][TextBox] キャレットの位置を取得する | HIROs.NET Blog
