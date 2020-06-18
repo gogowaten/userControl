@@ -65,6 +65,8 @@ namespace _20200616_textbox
 //https://vdlz.xyz/Csharp/WPF/Control/EditableControl/TextBox/TextBoxNumberOnly.html
 //            [Tips][TextBox] キャレットの位置を取得する | HIROs.NET Blog
 //https://blog.hiros-dot.net/?p=1594
+//          テキストボックスのIME制御 - WPF覚え書き
+//https://sites.google.com/site/wpfjueeshuki/tekisutobokkusunoime-zhi-yu
 
         private void MyTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
