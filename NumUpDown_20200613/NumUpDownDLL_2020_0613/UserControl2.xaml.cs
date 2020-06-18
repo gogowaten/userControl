@@ -23,39 +23,25 @@ namespace NumUpDownDLL_2020_0613
         {
             InitializeComponent();
 
-            //var mb = new MultiBinding();
-            //mb.Converter = new MyFormatConverter();
-
-            Binding b;
-            //b = new Binding();
-            //b.Source = this;
-            //b.Path = new PropertyPath(nameof(MyF1));
-            //b.Mode = BindingMode.OneWay;
-            //mb.Bindings.Add(b);
-
-            //b = new Binding();
-            //b.Source = this;
-            //b.Path = new PropertyPath(nameof(MyF2));
-            //b.Mode = BindingMode.OneWay;
-            //mb.Bindings.Add(b);
-
-            //BindingOperations.SetBinding(this, MyStringFormatProperty, mb);
-
-
+           
+            //MyValueと表示入力用のTextBoxとのBinding
             var mb = new MultiBinding();
             mb.Converter = new MyStringConverter();
             //mb.ConverterParameter = this;
 
+            Binding b;
+            //Value用のBinding
             b = new Binding();
             b.Source = this;
             b.Path = new PropertyPath(MyValueProperty);
             b.Mode = BindingMode.TwoWay;
             mb.Bindings.Add(b);
 
+            //StringFormat用のBinding
             b = new Binding();
             b.Source = this;
             b.Path = new PropertyPath(MyStringFormatProperty);
-            b.Mode = BindingMode.OneWay;//重要
+            b.Mode = BindingMode.OneWay;//重要、TextBoxの値からはStringFormatを変換しないので渡さない
             //b.Mode = BindingMode.TwoWay;
             mb.Bindings.Add(b);
 
@@ -73,25 +59,40 @@ namespace NumUpDownDLL_2020_0613
         //PropertyMetadata代わりにFrameworkPropertyMetadataを使用し、適切なフラグを指定するようにコードを更新します。
         public decimal MyValue
         {
-            get
-            {
-                return (decimal)GetValue(MyValueProperty);
-            }
-
-            set
-            {
-                SetValue(MyValueProperty, value);
-            }
+            get { return (decimal)GetValue(MyValueProperty); }
+            set { SetValue(MyValueProperty, value); }
         }
-        public static readonly DependencyProperty MyValueProperty =
-            DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(UserControl2),
-                new FrameworkPropertyMetadata(0m, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        //↑Binding.Modeの既定値がTwoWayになる
-        //↓
         //public static readonly DependencyProperty MyValueProperty =
         //    DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(UserControl2),
         //        new PropertyMetadata(0m));
 
+        //↑のBinding.Modeの既定値をTwoWayにしたのが↓
+
+        //public static readonly DependencyProperty MyValueProperty =
+        //    DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(UserControl2),
+        //        new FrameworkPropertyMetadata(0m, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        //minmaxの検証を追加した最終形態
+        public static readonly DependencyProperty MyValueProperty =
+            DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(UserControl2),
+                new FrameworkPropertyMetadata(0m, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnMyValueChanged, CoerceMyValue));
+
+        private static void OnMyValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //特にすることないけどCoerceValueCallbackを呼び出すのに必要？
+        }
+
+        private static object CoerceMyValue(DependencyObject d, object baseValue)
+        {
+            //最小値と最大値を越えないように値を矯正
+            var value = (decimal)baseValue;
+            var uc = (UserControl2)d;
+            if (value < uc.MyMin)
+                value = uc.MyMin;
+            if (value > uc.MyMax)
+                value = uc.MyMax;
+            return value;
+        }
 
         public decimal MySmallChange
         {
@@ -110,6 +111,7 @@ namespace NumUpDownDLL_2020_0613
         public static readonly DependencyProperty MyLargeChangeProperty =
             DependencyProperty.Register(nameof(MyLargeChange), typeof(decimal), typeof(UserControl2), new PropertyMetadata(10m));
 
+        #region stringformat
         public string MyStringFormat
         {
             get => (string)GetValue(MyStringFormatProperty);
@@ -179,11 +181,56 @@ namespace NumUpDownDLL_2020_0613
                 else
                 {
                     uc.MyStringFormat = new string('0', uc.MyKetaFront) + '.' + new string('0', keta);
-                }                
+                }
             }
+        }
+        #endregion stringformat
+
+        #region MinMax
+
+
+        public decimal MyMin
+        {
+            get { return (decimal)GetValue(MyMinProperty); }
+            set { SetValue(MyMinProperty, value); }
+        }
+
+        public static readonly DependencyProperty MyMinProperty =
+            DependencyProperty.Register("MyMin", typeof(decimal), typeof(UserControl2),
+                new PropertyMetadata(decimal.MinValue, OnMyMinChanged));
+        private static void OnMyMinChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //矛盾の解消
+            //今の値と設定された最小値に矛盾があれば、今の値を最小値と同じ値に変更
+            var uc = (UserControl2)d;
+            var value = (decimal)e.NewValue;
+            if (uc.MyValue < value)
+                uc.MyValue = value;
         }
 
 
+        public decimal MyMax
+        {
+            get { return (decimal)GetValue(MyMaxProperty); }
+            set { SetValue(MyMaxProperty, value); }
+        }
+
+        public static readonly DependencyProperty MyMaxProperty =
+            DependencyProperty.Register("MyMax", typeof(decimal), typeof(UserControl2),
+                new PropertyMetadata(decimal.MaxValue, OnMyMaxChanged));
+        private static void OnMyMaxChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //矛盾の解消
+            //今の値と設定された最大値に矛盾があれば、今の値を最大値と同じ値に変更
+            var uc = (UserControl2)d;
+            var value = (decimal)e.NewValue;
+            if (uc.MyValue > value)
+                uc.MyValue = value;
+        }
+
+
+
+        #endregion MinMax
 
         #region クリックとかのイベント処理
 
@@ -201,18 +248,6 @@ namespace NumUpDownDLL_2020_0613
         {
             if (e.Delta < 0)
             {
-                MyValue -= MySmallChange;
-            }
-            else
-            {
-                MyValue += MySmallChange;
-            }
-        }
-
-        private void TextBox_MouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            if (e.Delta < 0)
-            {
                 MyValue -= MyLargeChange;
             }
             else
@@ -221,13 +256,22 @@ namespace NumUpDownDLL_2020_0613
             }
         }
 
+        private void TextBox_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta < 0)
+            {
+                MyValue -= MySmallChange;
+            }
+            else
+            {
+                MyValue += MySmallChange;
+            }
+        }
+
 
         #endregion クリックとかのイベント処理
 
-        private void TextBox_MouseWheel_1(object sender, MouseWheelEventArgs e)
-        {
-
-        }
+      
     }
 
 

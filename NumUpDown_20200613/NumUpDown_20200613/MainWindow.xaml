@@ -51,6 +51,15 @@
         <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyKetaRear}" MyLargeChange="1"/>
       </StackPanel>
       <StackPanel Orientation="Horizontal">
+        <TextBlock Text="最小値"/>
+        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyMin}" MyLargeChange="1"/>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="最大値"/>
+        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyMax}" MyLargeChange="1"/>
+      </StackPanel>
+      
+      <StackPanel Orientation="Horizontal">
         <TextBlock Text="value"/>
         <TextBlock Text="{Binding ElementName=uc2, Path=MyValue}" Background="LightGray" TextAlignment="Right" Width="auto" Padding="2"/>
       </StackPanel>
