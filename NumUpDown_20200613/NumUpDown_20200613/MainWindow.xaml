@@ -31,17 +31,12 @@
       </Style>
     </Grid.Resources>
 
-    <my:UserControl2 Name="uc2" MyValue="-12.34" MyKetaFront="3" MyKetaRear="3" Width="100" Height="20"/>
+    <my:UserControl2 Name="uc2" Width="100" Height="20"
+                     MyValue="-12.34" MyKetaFront="3" MyKetaRear="3"
+                     MyMin="-20" MyMax="100"
+                     MySmallChange="1" MyLargeChange="10"/>
     
     <StackPanel Grid.Column="1">
-      <StackPanel Orientation="Horizontal">
-        <TextBlock Text="width"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=Width}" MyKetaRear="1"/>
-      </StackPanel>
-      <StackPanel Orientation="Horizontal">
-        <TextBlock Text="height"/>
-        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=Height}" MyKetaRear="1"/>
-      </StackPanel>
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="整数桁"/>
         <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyKetaFront}" MyLargeChange="1"/>
@@ -58,7 +53,27 @@
         <TextBlock Text="最大値"/>
         <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyMax}" MyLargeChange="1"/>
       </StackPanel>
-      
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="小変更"/>
+        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MySmallChange}" MyLargeChange="1"/>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="大変更"/>
+        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyLargeChange}" MyLargeChange="1"/>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="width"/>
+        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=Width}" MyKetaRear="1"/>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="height"/>
+        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=Height}" MyKetaRear="1"/>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="fontsize"/>
+        <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=FontSize}" MyKetaRear="1"/>
+      </StackPanel>
+
       <StackPanel Orientation="Horizontal">
         <TextBlock Text="value"/>
         <TextBlock Text="{Binding ElementName=uc2, Path=MyValue}" Background="LightGray" TextAlignment="Right" Width="auto" Padding="2"/>
