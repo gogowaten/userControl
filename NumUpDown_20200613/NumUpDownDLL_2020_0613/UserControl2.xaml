@@ -22,14 +22,16 @@
       <ColumnDefinition Width="15"/>
     </Grid.ColumnDefinitions>
 
-    <RepeatButton Grid.Row="0" Grid.Column="1" Click="RepeatButtonUp_Click" MouseWheel="RepeatButton_MouseWheel">
+    <RepeatButton Grid.Row="0" Grid.Column="1" IsTabStop="False"
+                  Click="RepeatButtonUp_Click" MouseWheel="RepeatButton_MouseWheel">
       <RepeatButton.Content>
         <Viewbox x:Name="ViewBoxUp" Margin="1">
           <Polygon Points="1,0 2,1 0,1 1,0" Fill="Gray"/>
         </Viewbox>
       </RepeatButton.Content>
     </RepeatButton>
-    <RepeatButton Grid.Row="1" Grid.Column="1" Click="RepeatButtonDown_Click" MouseWheel="RepeatButton_MouseWheel">
+    <RepeatButton Grid.Row="1" Grid.Column="1" IsTabStop="False"
+                  Click="RepeatButtonDown_Click" MouseWheel="RepeatButton_MouseWheel">
       <RepeatButton.Content>
         <Viewbox x:Name="ViewBoxDown" Margin="1">
           <Polygon Points="0,0 2,0 1,1 0,0" Fill="Gray"/>
@@ -37,7 +39,7 @@
       </RepeatButton.Content>
     </RepeatButton>
 
-    
+
     <TextBox Grid.RowSpan="2" Grid.Column="0"
              Name="MyTextBox"
              TextAlignment="Right" VerticalContentAlignment="Center"
@@ -45,17 +47,20 @@
              InputMethod.IsInputMethodSuspended="True"
              PreviewTextInput="MyTextBox_PreviewTextInput"
              LostFocus="MyTextBox_LostFocus"
-             CommandManager.PreviewExecuted="MyTextBox_PreviewExecuted">
+             CommandManager.PreviewExecuted="MyTextBox_PreviewExecuted"
+             GotFocus="MyTextBox_GotFocus"
+             PreviewMouseLeftButtonDown="MyTextBox_PreviewMouseLeftButtonDown"
+             PreviewKeyDown="MyTextBox_PreviewKeyDown">
 
       <TextBox.Text>
         <MultiBinding Converter="{StaticResource MyConv}" Mode="TwoWay">
           <Binding Path="MyValue" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl2}}"/>
           <Binding Path="MyStringFormat" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl2}}"/>
         </MultiBinding>
-         
+
       </TextBox.Text>
     </TextBox>
-    
+
 
     <!--<TextBox Grid.RowSpan="2" Grid.Column="0"
              Name="MyTextBox"

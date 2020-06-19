@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
+//WPFで数字とハイフンとピリオドだけ入力できるテキストボックス、-0.0に意味はある？ - 午後わてんのブログ
+//https://gogowaten.hatenablog.com/entry/2020/06/19/152006
+
 
 namespace NumUpDownDLL_2020_0613
 {
@@ -62,12 +67,12 @@ namespace NumUpDownDLL_2020_0613
             get { return (decimal)GetValue(MyValueProperty); }
             set { SetValue(MyValueProperty, value); }
         }
+
         //public static readonly DependencyProperty MyValueProperty =
         //    DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(UserControl2),
         //        new PropertyMetadata(0m));
 
         //↑のBinding.Modeの既定値をTwoWayにしたのが↓
-
         //public static readonly DependencyProperty MyValueProperty =
         //    DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(UserControl2),
         //        new FrameworkPropertyMetadata(0m, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
@@ -111,6 +116,7 @@ namespace NumUpDownDLL_2020_0613
         public static readonly DependencyProperty MyLargeChangeProperty =
             DependencyProperty.Register(nameof(MyLargeChange), typeof(decimal), typeof(UserControl2), new PropertyMetadata(10m));
 
+
         #region stringformat
         public string MyStringFormat
         {
@@ -120,6 +126,7 @@ namespace NumUpDownDLL_2020_0613
         public static readonly DependencyProperty MyStringFormatProperty =
             DependencyProperty.Register(nameof(MyStringFormat), typeof(string), typeof(UserControl2), new PropertyMetadata(""));
 
+        //整数桁数
         public int MyKetaFront
         {
             get => (int)GetValue(MyKetaFrontProperty);
@@ -132,11 +139,15 @@ namespace NumUpDownDLL_2020_0613
             var uc = (UserControl2)obj;
             if (uc != null)
             {
-                //新しい桁数が0以下 or 小数桁が0未満なら書式変更しない
                 int keta = (int)e.NewValue;
-                int rear = uc.MyKetaRear;
-                if (keta < 0 || rear < 0)
+                int rear = uc.MyKetaRear;//小数桁数
+                if (rear < 0) rear = 0;
+                if (keta < 0) keta = 0;
+
+                //整数桁、小数桁ともに0以下なら書式設定なしにする
+                if (rear == 0 && keta == 0)
                 {
+                    uc.MyStringFormat = "";
                     return;
                 }
 
@@ -157,6 +168,7 @@ namespace NumUpDownDLL_2020_0613
             }
         }
 
+        //小数桁数
         public int MyKetaRear
         {
             get => (int)GetValue(MyKetaRearProperty);
@@ -171,24 +183,34 @@ namespace NumUpDownDLL_2020_0613
             {
                 int keta = (int)e.NewValue;
                 int front = uc.MyKetaFront;
-                //新しい桁数が0未満 or 整数桁数が0以下なら書式変更しない
-                if (keta < 0 || front < 0) return;
+                //0未満なら0に変更して処理していく
+                if (front < 0)
+                    front = 0;
+                if (keta < 0)
+                    keta = 0;
+
+                //整数桁、小数桁ともに0以下なら書式設定なしにする
+                if (front == 0 && keta == 0)
+                {
+                    uc.MyStringFormat = "";
+                    return;
+                }
 
                 if (keta == 0)
                 {
-                    uc.MyStringFormat = new string('0', uc.MyKetaFront);
+                    uc.MyStringFormat = new string('0', front);
                 }
                 else
                 {
-                    uc.MyStringFormat = new string('0', uc.MyKetaFront) + '.' + new string('0', keta);
+                    uc.MyStringFormat = new string('0', front) + '.' + new string('0', keta);
                 }
             }
         }
         #endregion stringformat
 
+
+
         #region MinMax
-
-
         public decimal MyMin
         {
             get { return (decimal)GetValue(MyMinProperty); }
@@ -229,10 +251,11 @@ namespace NumUpDownDLL_2020_0613
         }
 
 
-
         #endregion MinMax
 
-        #region クリックとかのイベント処理
+
+
+        #region クリックやキー入力での数値加減
 
         private void RepeatButtonUp_Click(object sender, RoutedEventArgs e)
         {
@@ -268,11 +291,36 @@ namespace NumUpDownDLL_2020_0613
             }
         }
 
+        //方向キーでの数値加減
+        private void MyTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            //ctrl+up、ctrl+downでLargeChange            
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control)
+            {
+                if (e.Key == Key.Up)
+                {
+                    this.MyValue += MyLargeChange;
+                    //e.Handled = true;
+                    //MyTextBox.SelectAll();
+                }
+                else if (e.Key == Key.Down)
+                {
+                    this.MyValue -= MyLargeChange;
+                    //e.Handled = true;
+                }
+            }
+            //up、downでSmallChange
+            else if (e.Key == Key.Up)
+                this.MyValue += MySmallChange;
+            else if (e.Key == Key.Down)
+                this.MyValue -= MySmallChange;
+        }
 
 
-        #endregion クリックとかのイベント処理
+        #endregion クリックやキー入力での数値加減
 
-        #region 数字入力制限
+
+        #region テキストボックスの入力制限
         private void MyTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             var textbox = (TextBox)sender;
@@ -331,7 +379,31 @@ namespace NumUpDownDLL_2020_0613
                 e.Handled = true;
             }
         }
-        #endregion 数字入力制限
+
+        //        | オールトの雲
+        //http://ooltcloud.sakura.ne.jp/blog/201311/article_30013700.html
+
+        private void MyTextBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var tb = sender as TextBox;
+            if (tb.IsFocused == false)
+            {
+                tb.Focus();
+                e.Handled = true;
+            }
+        }
+
+
+
+        #endregion テキストボックスの入力制限
+
+        private void MyTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var tb = sender as TextBox;
+            tb.SelectAll();
+        }
+
+
     }
 
 
@@ -348,9 +420,19 @@ namespace NumUpDownDLL_2020_0613
         {
             //UserControl2 uc2 = (UserControl2)parameter;
             string f = (string)value;
-            if (f == "")
-                f = "0";
-            decimal d = decimal.Parse(f);
+
+            //数字とハイフンとピリオドだけ抜き出す
+            System.Text.RegularExpressions.MatchCollection ss =
+                new System.Text.RegularExpressions.Regex("[0-9.-]").Matches(f);
+            string str = "";
+            for (int i = 0; i < ss.Count; i++)
+            {
+                str += ss[i];
+            }
+
+            if (str == "")
+                str = "0";
+            decimal d = decimal.Parse(str);
 
             return new object[] { d };
             //string s = uc2.MyStringFormat;
