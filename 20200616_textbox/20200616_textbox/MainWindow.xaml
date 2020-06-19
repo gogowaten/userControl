@@ -6,13 +6,26 @@
         xmlns:local="clr-namespace:_20200616_textbox"
         mc:Ignorable="d"
         Title="MainWindow" Height="200" Width="400">
+  <Window.Resources>
+    <local:MyValidationRule x:Key="validationRule"/>
+  </Window.Resources>
   <Grid>
     <StackPanel>
       <TextBox x:Name="MyTextBox" Text="50" InputMethod.IsInputMethodSuspended="True"
                PreviewTextInput="MyTextBox_PreviewTextInput"/>
+      <TextBox InputMethod.IsInputMethodSuspended="True"
+               PreviewTextInput="MyTextBox_PreviewTextInput">
+        <TextBox.Text>
+          <Binding Path="MyText" UpdateSourceTrigger="PropertyChanged">
+            <Binding.ValidationRules>
+              <local:MyValidationRule/>
+            </Binding.ValidationRules>
+          </Binding>
+        </TextBox.Text>
+      </TextBox>
       <TextBox Text="50" InputMethod.IsInputMethodEnabled="False"/>
       <TextBox Text="50"/>
-      
+      <Button x:Name="ButtonTest" Content="test" Click="ButtonTest_Click"/>
     </StackPanel>
   </Grid>
 </Window>

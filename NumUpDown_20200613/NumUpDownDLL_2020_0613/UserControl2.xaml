@@ -57,23 +57,41 @@
           <Binding Path="MyValue" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl2}}"/>
           <Binding Path="MyStringFormat" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl2}}"/>
         </MultiBinding>
-
       </TextBox.Text>
     </TextBox>
 
-
+    <!--UpdateSourceTrigger="PropertyChanged"にしたけど、なぜか更新されないのでせっかく作ったValidationRuleも適用されない-->
     <!--<TextBox Grid.RowSpan="2" Grid.Column="0"
              Name="MyTextBox"
              TextAlignment="Right" VerticalContentAlignment="Center"
-             MouseWheel="TextBox_MouseWheel"             
+             MouseWheel="TextBox_MouseWheel"
+             InputMethod.IsInputMethodSuspended="True"
+             PreviewTextInput="MyTextBox_PreviewTextInput"
+             LostFocus="MyTextBox_LostFocus"
+             CommandManager.PreviewExecuted="MyTextBox_PreviewExecuted"
+             GotFocus="MyTextBox_GotFocus"
+             PreviewMouseLeftButtonDown="MyTextBox_PreviewMouseLeftButtonDown"
+             PreviewKeyDown="MyTextBox_PreviewKeyDown">
+
       <TextBox.Text>
-      <Binding Path="MyValue" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl2}}">
-        <Binding.StringFormat>
-          <Binding Path="MyStringFormat" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl2}}"/>
-        </Binding.StringFormat>
-      </Binding>
+        <MultiBinding Converter="{StaticResource MyConv}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+          <Binding Path="MyValue" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl2}}" UpdateSourceTrigger="PropertyChanged">
+            <Binding.ValidationRules>
+              <local:MyValidationRule/>
+            </Binding.ValidationRules>
+          </Binding>
+          <Binding Path="MyStringFormat" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl2}}" UpdateSourceTrigger="PropertyChanged">
+            <Binding.ValidationRules>
+              <local:MyValidationRule/>
+            </Binding.ValidationRules>
+          </Binding>
+          <MultiBinding.ValidationRules>
+            <local:MyValidationRule/>
+          </MultiBinding.ValidationRules>
+        </MultiBinding>
       </TextBox.Text>
     </TextBox>-->
+
 
 
   </Grid>

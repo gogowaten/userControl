@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
-
+using System.Globalization;
 
 namespace _20200616_textbox
 {
@@ -23,9 +23,12 @@ namespace _20200616_textbox
     public partial class MainWindow : Window
     {
         const string prefix = "個数：";
+        public string MyText { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = this;
 
             MyTextBox.Text = prefix + MyTextBox.Text;
             MyTextBox.GotFocus += MyTextBox_GotFocus;
@@ -52,21 +55,21 @@ namespace _20200616_textbox
 
         private void MyTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            
+
             MyTextBox.Text = prefix + MyTextBox.Text;
         }
 
 
-//        Visual Studio / WPF > link > TextBoxに数値しか入力できなくする > PreviewTextInput使用 | e.Handled = true; - Qiita
-//https://qiita.com/7of9/items/04793406f94d229a6c4d
-//          C# WPF 数値のみ入力できるTextBoxを作る - 備忘録
-//https://kagasu.hatenablog.com/entry/2017/02/14/155824
-//            TextBoxに数値のみを入力する[C# WPF]
-//https://vdlz.xyz/Csharp/WPF/Control/EditableControl/TextBox/TextBoxNumberOnly.html
-//            [Tips][TextBox] キャレットの位置を取得する | HIROs.NET Blog
-//https://blog.hiros-dot.net/?p=1594
-//          テキストボックスのIME制御 - WPF覚え書き
-//https://sites.google.com/site/wpfjueeshuki/tekisutobokkusunoime-zhi-yu
+        //        Visual Studio / WPF > link > TextBoxに数値しか入力できなくする > PreviewTextInput使用 | e.Handled = true; - Qiita
+        //https://qiita.com/7of9/items/04793406f94d229a6c4d
+        //          C# WPF 数値のみ入力できるTextBoxを作る - 備忘録
+        //https://kagasu.hatenablog.com/entry/2017/02/14/155824
+        //            TextBoxに数値のみを入力する[C# WPF]
+        //https://vdlz.xyz/Csharp/WPF/Control/EditableControl/TextBox/TextBoxNumberOnly.html
+        //            [Tips][TextBox] キャレットの位置を取得する | HIROs.NET Blog
+        //https://blog.hiros-dot.net/?p=1594
+        //          テキストボックスのIME制御 - WPF覚え書き
+        //https://sites.google.com/site/wpfjueeshuki/tekisutobokkusunoime-zhi-yu
 
         private void MyTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -105,6 +108,26 @@ namespace _20200616_textbox
 
             //e.Handled = !new Regex("[0-9.-]").IsMatch(e.Text);
             //e.Handled = !new Regex("[0-9]").IsMatch(e.Text);
+        }
+
+        private void ButtonTest_Click(object sender, RoutedEventArgs e)
+        {
+            var neko = MyText;
+        }
+    }
+    public class MyValidationRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            string str = (string)value;
+            if (decimal.TryParse(str, out decimal m))
+            {
+                return new ValidationResult(true, null);
+            }
+            else
+            {
+                return new ValidationResult(false, "数値じゃない");
+            }
         }
     }
 }

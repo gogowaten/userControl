@@ -84,7 +84,7 @@ namespace NumUpDownDLL_2020_0613
 
         private static void OnMyValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            //特にすることないけどCoerceValueCallbackを呼び出すのに必要？
+            //特にすることないけどCoerceValueCallbackを呼び出すのに必要？            
         }
 
         private static object CoerceMyValue(DependencyObject d, object baseValue)
@@ -294,6 +294,13 @@ namespace NumUpDownDLL_2020_0613
         //方向キーでの数値加減
         private void MyTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            //スペースキーが押されたときは無効にする
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+                return;
+            }
+
             //ctrl+up、ctrl+downでLargeChange            
             if (e.KeyboardDevice.Modifiers == ModifierKeys.Control)
             {
@@ -380,9 +387,13 @@ namespace NumUpDownDLL_2020_0613
             }
         }
 
+        #endregion テキストボックスの入力制限
+
+
+
         //        | オールトの雲
         //http://ooltcloud.sakura.ne.jp/blog/201311/article_30013700.html
-
+        //クリックしたときにテキストを全選択
         private void MyTextBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var tb = sender as TextBox;
@@ -393,10 +404,7 @@ namespace NumUpDownDLL_2020_0613
             }
         }
 
-
-
-        #endregion テキストボックスの入力制限
-
+        //focusしたときにテキストを全選択
         private void MyTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             var tb = sender as TextBox;
@@ -406,7 +414,7 @@ namespace NumUpDownDLL_2020_0613
 
     }
 
-
+    //テキストボックスの文字列と数値の変換用
     public class MyStringConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -437,6 +445,26 @@ namespace NumUpDownDLL_2020_0613
             return new object[] { d };
             //string s = uc2.MyStringFormat;
             //return new object[] { d, s };
+        }
+    }
+
+
+    //数値にならない値がテキストボックスにあるときに枠を赤くしたいけど
+    //なぜか動かない
+    //マルチBindingの場合は、また方法が違うみたい
+    public class MyValidationRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            string text = (string)value;
+            if(decimal.TryParse(text,out decimal m))
+            {
+                return new ValidationResult(true, null);
+            }
+            else
+            {
+                return new ValidationResult(false, null);
+            }
         }
     }
 }
