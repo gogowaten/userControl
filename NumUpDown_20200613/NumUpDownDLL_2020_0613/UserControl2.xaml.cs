@@ -29,10 +29,12 @@ namespace NumUpDownDLL_2020_0613
             InitializeComponent();
 
 
-            //MyValueと表示入力用のTextBoxとのBinding
+            //MyValueとTextBoxのTextとのBinding
             var mb = new MultiBinding();
             mb.Converter = new MyStringConverter();
-            //mb.ConverterParameter = this;
+            //
+            //mb.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            
 
             Binding b;
             //Value用のBinding
@@ -52,7 +54,6 @@ namespace NumUpDownDLL_2020_0613
 
 
             MyTextBox.SetBinding(TextBox.TextProperty, mb);
-
 
 
         }
@@ -419,8 +420,8 @@ namespace NumUpDownDLL_2020_0613
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            decimal d = (decimal)values[0];
-            string s = (string)values[1];
+            decimal d = (decimal)values[0];//数値
+            string s = (string)values[1];//StringFormat
             return d.ToString(s);
         }
 
@@ -437,12 +438,15 @@ namespace NumUpDownDLL_2020_0613
             {
                 str += ss[i];
             }
-
+            
             if (str == "")
                 str = "0";
-            decimal d = decimal.Parse(str);
-
-            return new object[] { d };
+            
+            if (decimal.TryParse(str, out decimal m) == false)
+            {
+                return null;
+            }
+            return new object[] { m };
             //string s = uc2.MyStringFormat;
             //return new object[] { d, s };
         }
@@ -457,7 +461,7 @@ namespace NumUpDownDLL_2020_0613
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             string text = (string)value;
-            if(decimal.TryParse(text,out decimal m))
+            if (decimal.TryParse(text, out decimal m))
             {
                 return new ValidationResult(true, null);
             }
@@ -467,4 +471,6 @@ namespace NumUpDownDLL_2020_0613
             }
         }
     }
+
+
 }

@@ -53,7 +53,7 @@
              PreviewKeyDown="MyTextBox_PreviewKeyDown">
 
       <TextBox.Text>
-        <MultiBinding Converter="{StaticResource MyConv}" Mode="TwoWay">
+        <MultiBinding Converter="{StaticResource MyConv}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
           <Binding Path="MyValue" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl2}}"/>
           <Binding Path="MyStringFormat" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type local:UserControl2}}"/>
         </MultiBinding>

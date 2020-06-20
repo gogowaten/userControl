@@ -13,10 +13,10 @@
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>
-      <ColumnDefinition Width="20"/>
+      <ColumnDefinition Width="16"/>
     </Grid.ColumnDefinitions>
 
-    <!--<RepeatButton Grid.Row="0" Grid.Column="1">
+    <RepeatButton Grid.Row="0" Grid.Column="1">
       <RepeatButton.Content>
         <Viewbox x:Name="ViewBoxUp" Margin="1">
           <Polygon Points="1,0 2,1 0,1 1,0" Fill="Gray"/>
@@ -29,7 +29,7 @@
           <Polygon Points="0,0 2,0 1,1 0,0" Fill="Gray"/>
         </Viewbox>
       </RepeatButton.Content>
-    </RepeatButton>-->
+    </RepeatButton>
 
     <TextBox x:Name="MyTextBox" Grid.RowSpan="2" Grid.Column="0"
              TextAlignment="Right" VerticalContentAlignment="Center"
@@ -37,7 +37,9 @@
              PreviewKeyDown="MyTextBox_PreviewKeyDown"
              PreviewTextInput="MyTextBox_PreviewTextInput"
              LostFocus="MyTextBox_LostFocus"
-             CommandManager.PreviewExecuted="MyTextBox_PreviewExecuted">
+             CommandManager.PreviewExecuted="MyTextBox_PreviewExecuted"
+             PreviewMouseLeftButtonDown="MyTextBox_PreviewMouseLeftButtonDown"
+             GotFocus="MyTextBox_GotFocus">
       
     </TextBox>
   </Grid>
