@@ -7,7 +7,7 @@
         xmlns:my="clr-namespace:NumUpDownDLL_2020_0613;assembly=NumUpDownDLL_2020_0613"
         
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="614">
+        Title="MainWindow" Height="600" Width="614">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="0.5*"/>
@@ -22,20 +22,19 @@
       </Style>
       <Style TargetType="TextBlock">
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Margin" Value="0,0,5,0"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
         <Setter Property="Width" Value="50"/>
       </Style>
       <Style TargetType="my:UserControl2">
-        <Setter Property="Width" Value="60"/>
+        <Setter Property="Width" Value="80"/>
       </Style>
     </Grid.Resources>
 
-    <my:UserControl2 Name="uc2" Width="100" Height="20"
-                     MyValue="-12.34" MyKetaFront="3" MyKetaRear="3"
-                     MyMin="-20" MyMax="100"
+    <my:UserControl2 Name="uc2" Width="200" Height="40" FontSize="24"
+                     MyValue="-01234.56789" MyKetaFront="3" MyKetaRear="1"
                      MySmallChange="1" MyLargeChange="10"/>
 
-    <DockPanel Grid.Row="1">
+    <DockPanel Grid.Row="1" HorizontalAlignment="Center">
       <StackPanel Grid.Row="1">
         <StackPanel Orientation="Horizontal">
           <TextBlock Text="整数桁"/>
@@ -55,7 +54,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal">
           <TextBlock Text="小変更"/>
-          <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MySmallChange}" MyLargeChange="1" MySmallChange="0.1" MyKetaRear="1"/>
+          <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MySmallChange}" MyLargeChange="0.1" MySmallChange="0.01" MyKetaRear="2"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
           <TextBlock Text="大変更"/>
@@ -76,14 +75,17 @@
           <TextBlock Text="fontsize"/>
           <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=FontSize}" MyKetaRear="1"/>
         </StackPanel>
-
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="書式 C"/>
+          <my:UserControl2 MyValue="{Binding ElementName=uc2, Path=MyValue}" MyStringFormat="C"/>
+        </StackPanel>
         <StackPanel Orientation="Horizontal">
           <TextBlock Text="value"/>
           <TextBlock Text="{Binding ElementName=uc2, Path=MyValue}" Background="LightGray" TextAlignment="Right" Width="auto" Padding="2"/>
         </StackPanel>
       </StackPanel>
 
-      <StackPanel>
+      <StackPanel Visibility="Visible">
         <TextBlock x:Name="MyTextBlock" Text="textblock"/>
         <my:UserControl2 MyValue="20" MyStringFormat="C"/>
         <Button x:Name="ButtonTest" Content="test" Click="ButtonTest_Click"/>
@@ -104,23 +106,23 @@
           <my:UserControl1 Name="MyDouble" MyMaximum="2000" MyValue="{Binding ElementName=My1, Path=Width, Mode=TwoWay}"/>
 
         </WrapPanel>
-        <!--<StackPanel>
-        <my:UserControl1 Height="20" MyValue="-2.5"/>        
-        <my:UserControl1 Height="50" MyValue="0"/>
-        <my:UserControl1 Name="uc1"/>
-        
-        <Separator Margin="8" Background="MediumTurquoise"/>
-        
-        <Slider Value="{Binding ElementName=uc1, Path=MyValue}" Minimum="-10" Maximum="10"/>
-        <my:UserControl1  Height="20" MyValue="50"/>
-      </StackPanel>
-      <StackPanel Orientation="Horizontal">
-        <my:UserControl1/>
-        <my:UserControl1 MyValue="100" Width="50"/>
-        <my:UserControl1 MyValue="950" MyMaximum="1000" Width="50" Height="30"/>
-      </StackPanel>
-      <my:UserControl1 Width="100"/>
-      <my:UserControl1 Width="200" Height="40" FontSize="20" MyKetaInt="2" MyKetaDecimal="1"/>-->
+        <StackPanel>
+          <my:UserControl1 Height="20" MyValue="-2.5"/>
+          <my:UserControl1 Height="50" MyValue="0"/>
+          <my:UserControl1 Name="uc1"/>
+
+          <Separator Margin="8" Background="MediumTurquoise"/>
+
+          <Slider Value="{Binding ElementName=uc1, Path=MyValue}" Minimum="-10" Maximum="10"/>
+          <my:UserControl1  Height="20" MyValue="50"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <my:UserControl1/>
+          <my:UserControl1 MyValue="100" Width="50"/>
+          <my:UserControl1 MyValue="950" MyMaximum="1000" Width="50" Height="30"/>
+        </StackPanel>
+        <my:UserControl1 Width="100"/>
+        <my:UserControl1 Width="200" Height="40" FontSize="20" MyKetaInt="2" MyKetaDecimal="1"/>
       </StackPanel>
 
     </DockPanel>
