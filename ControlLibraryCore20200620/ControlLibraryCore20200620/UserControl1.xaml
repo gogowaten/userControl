@@ -16,7 +16,7 @@
       <ColumnDefinition Width="20"/>
     </Grid.ColumnDefinitions>
 
-    <RepeatButton Grid.Row="0" Grid.Column="1">
+    <!--<RepeatButton Grid.Row="0" Grid.Column="1">
       <RepeatButton.Content>
         <Viewbox x:Name="ViewBoxUp" Margin="1">
           <Polygon Points="1,0 2,1 0,1 1,0" Fill="Gray"/>
@@ -29,11 +29,15 @@
           <Polygon Points="0,0 2,0 1,1 0,0" Fill="Gray"/>
         </Viewbox>
       </RepeatButton.Content>
-    </RepeatButton>
+    </RepeatButton>-->
 
     <TextBox x:Name="MyTextBox" Grid.RowSpan="2" Grid.Column="0"
              TextAlignment="Right" VerticalContentAlignment="Center"
-             Text="TextBox">
+             InputMethod.IsInputMethodSuspended="True"
+             PreviewKeyDown="MyTextBox_PreviewKeyDown"
+             PreviewTextInput="MyTextBox_PreviewTextInput"
+             LostFocus="MyTextBox_LostFocus"
+             CommandManager.PreviewExecuted="MyTextBox_PreviewExecuted">
       
     </TextBox>
   </Grid>

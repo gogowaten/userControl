@@ -24,5 +24,26 @@ namespace ControlLibraryCore20200620
         {
             InitializeComponent();
         }
+
+        //comment
+        private void MyTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void MyTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+
+        }
+
+        private void MyTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MyTextBox_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
     }
 }
