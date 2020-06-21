@@ -25,6 +25,7 @@ namespace ControlLibraryCore20200620
             InitializeComponent();
         }
 
+        #region 入力制限
         //スペースキーが押されたのを無効にする
         private void MyTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -112,5 +113,7 @@ namespace ControlLibraryCore20200620
                 e.Handled = true;
             }
         }
+        #endregion 入力制限
+
     }
 }
