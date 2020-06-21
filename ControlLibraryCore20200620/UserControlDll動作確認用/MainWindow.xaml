@@ -6,10 +6,14 @@
         xmlns:local="clr-namespace:UserControlDll動作確認用"
         xmlns:myControl="clr-namespace:ControlLibraryCore20200620;assembly=ControlLibraryCore20200620"
         mc:Ignorable="d"
-        Title="MainWindow" Height="200" Width="400">
+        Title="MainWindow" Height="300" Width="400">
   <Grid>
-    <StackPanel Margin="10">
-      <myControl:UserControl1/>
-    </StackPanel>
+    <Viewbox>
+      <StackPanel Margin="10">
+        <TextBlock Text="数字とハイフンとピリオドだけ入力できる"/>
+        <myControl:UserControl1 Margin="10"/>
+        <myControl:UserControl1 Margin="10"/>
+      </StackPanel>
+    </Viewbox>
   </Grid>
 </Window>

@@ -16,14 +16,14 @@
       <ColumnDefinition Width="16"/>
     </Grid.ColumnDefinitions>
 
-    <RepeatButton Grid.Row="0" Grid.Column="1">
+    <RepeatButton Grid.Row="0" Grid.Column="1" IsTabStop="False">
       <RepeatButton.Content>
         <Viewbox x:Name="ViewBoxUp" Margin="1">
           <Polygon Points="1,0 2,1 0,1 1,0" Fill="Gray"/>
         </Viewbox>
       </RepeatButton.Content>
     </RepeatButton>
-    <RepeatButton Grid.Row="1" Grid.Column="1">
+    <RepeatButton Grid.Row="1" Grid.Column="1" IsTabStop="False">
       <RepeatButton.Content>
         <Viewbox x:Name="ViewBoxDown" Margin="1">
           <Polygon Points="0,0 2,0 1,1 0,0" Fill="Gray"/>
@@ -38,9 +38,9 @@
              PreviewTextInput="MyTextBox_PreviewTextInput"
              LostFocus="MyTextBox_LostFocus"
              CommandManager.PreviewExecuted="MyTextBox_PreviewExecuted"
-             PreviewMouseLeftButtonDown="MyTextBox_PreviewMouseLeftButtonDown"
-             GotFocus="MyTextBox_GotFocus">
-      
+             GotFocus="MyTextBox_GotFocus"
+             PreviewMouseLeftButtonDown="MyTextBox_PreviewMouseLeftButtonDown">
+
     </TextBox>
   </Grid>
 </UserControl>

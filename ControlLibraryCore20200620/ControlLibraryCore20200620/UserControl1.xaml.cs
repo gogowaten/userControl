@@ -93,6 +93,13 @@ namespace ControlLibraryCore20200620
             }
         }
 
+        //focusしたときにテキストを全選択
+        private void MyTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var tb = sender as TextBox;
+            tb.SelectAll();
+        }
+
         //        | オールトの雲
         //http://ooltcloud.sakura.ne.jp/blog/201311/article_30013700.html
         //クリックしたときにテキストを全選択
@@ -104,13 +111,6 @@ namespace ControlLibraryCore20200620
                 tb.Focus();
                 e.Handled = true;
             }
-        }
-
-        //focusしたときにテキストを全選択
-        private void MyTextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var tb = sender as TextBox;
-            tb.SelectAll();
         }
     }
 }

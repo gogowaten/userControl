@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:_20200613_CoreApp"
       xmlns:uc="clr-namespace:CoreWpfControlLibrary1;assembly=CoreWpfControlLibrary1"  
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="200" Width="400">
     <Grid>
     <StackPanel>
       <uc:UserControl1/>
