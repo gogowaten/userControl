@@ -18,9 +18,9 @@ namespace ControlLibraryCore20200620
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class NumericUpDown : UserControl
     {
-        public UserControl1()
+        public NumericUpDown()
         {
             InitializeComponent();
         }
@@ -115,5 +115,32 @@ namespace ControlLibraryCore20200620
         }
         #endregion 入力制限
 
+
+        #region 依存関係プロパティ
+
+
+        public decimal MyValue
+        {
+            get { return (decimal)GetValue(MyValueProperty); }
+            set { SetValue(MyValueProperty, value); }
+        }
+
+        public static readonly DependencyProperty MyValueProperty =
+            DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(NumericUpDown), new PropertyMetadata(0m));
+
+
+
+
+        #endregion
+
+        private void RepeatButtonUp_Click(object sender, RoutedEventArgs e)
+        {
+            MyValue++;
+        }
+
+        private void RepeatButtonDown_Click(object sender, RoutedEventArgs e)
+        {
+            MyValue--;
+        }
     }
 }

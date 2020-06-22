@@ -10,9 +10,9 @@
   <Grid>
     <Viewbox>
       <StackPanel Margin="10">
-        <TextBlock Text="数字とハイフンとピリオドだけ入力できる"/>
-        <myControl:UserControl1 Margin="10"/>
-        <myControl:UserControl1 Margin="10"/>
+        <TextBlock Text="WPFにもNumericUpDownをユーザーコントロールで、その3"/>
+        <myControl:NumericUpDown Margin="10" MyValue="5" x:Name="nume"/>
+        <Slider Value="{Binding ElementName=nume, Path=MyValue, Mode=TwoWay}" Margin="10"/>
       </StackPanel>
     </Viewbox>
   </Grid>
