@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+//WPFにもNumericUpDownみたいなのをユーザーコントロールで、その4 - 午後わてんのブログ
+//https://gogowaten.hatenablog.com/entry/2020/06/23/204136
+
 namespace ControlLibraryCore20200620
 {
     /// <summary>
@@ -118,7 +121,7 @@ namespace ControlLibraryCore20200620
 
         #region 依存関係プロパティ
 
-
+        //要の値
         public decimal MyValue
         {
             get { return (decimal)GetValue(MyValueProperty); }
@@ -130,17 +133,51 @@ namespace ControlLibraryCore20200620
 
 
 
+        //小変更値
+        public decimal MySmallChange
+        {
+            get { return (decimal)GetValue(MySmallChangeProperty); }
+            set { SetValue(MySmallChangeProperty, value); }
+        }
+        public static readonly DependencyProperty MySmallChangeProperty =
+            DependencyProperty.Register(nameof(MySmallChange), typeof(decimal), typeof(NumericUpDown), new PropertyMetadata(1m));
+
+
+        //大変更値
+        public decimal MyLargeChange
+        {
+            get { return (decimal)GetValue(MyLargeChangeProperty); }
+            set { SetValue(MyLargeChangeProperty, value); }
+        }
+        public static readonly DependencyProperty MyLargeChangeProperty =
+            DependencyProperty.Register(nameof(MyLargeChange), typeof(decimal), typeof(NumericUpDown), new PropertyMetadata(10m));
+
+
 
         #endregion
 
+
+
         private void RepeatButtonUp_Click(object sender, RoutedEventArgs e)
         {
-            MyValue++;
+            MyValue += MySmallChange;
         }
 
         private void RepeatButtonDown_Click(object sender, RoutedEventArgs e)
         {
-            MyValue--;
+            MyValue -= MySmallChange;
+        }
+
+        private void RepeatButton_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta < 0) MyValue -= MyLargeChange;
+            else MyValue += MyLargeChange;
+        }
+
+        private void MyTextBox_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta < 0) MyValue -= MySmallChange;
+            else MyValue += MySmallChange;
         }
     }
 }

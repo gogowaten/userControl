@@ -24,5 +24,17 @@ namespace UserControlDll動作確認用
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var b = (Button)sender;
+            nume.MySmallChange = decimal.Parse(b.Tag.ToString());
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var b = (Button)sender;
+            nume.MyLargeChange = decimal.Parse(b.Tag.ToString());
+        }
     }
 }
