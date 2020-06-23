@@ -13,8 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-//WPFにもNumericUpDownみたいなのをユーザーコントロールで、その4 - 午後わてんのブログ
-//https://gogowaten.hatenablog.com/entry/2020/06/23/204136
 
 namespace ControlLibraryCore20200620
 {
