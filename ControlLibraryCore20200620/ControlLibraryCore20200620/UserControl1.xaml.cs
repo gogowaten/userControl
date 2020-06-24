@@ -127,7 +127,26 @@ namespace ControlLibraryCore20200620
         }
 
         public static readonly DependencyProperty MyValueProperty =
-            DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(NumericUpDown), new PropertyMetadata(0m));
+            DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(NumericUpDown),
+                new PropertyMetadata(0m, OnMyValuePropertyChanged, CoerceMyValue));
+
+        //MyValueの変更直後の動作
+        private static void OnMyValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //することない
+        }
+
+        //MyValueの変更直前の動作、値の検証、矛盾があれば値を書き換えて解消
+        //入力された値が下限値より小さい場合は下限値に書き換え
+        //入力された値が上限値より大きい場合は上限値に書き換え
+        private static object CoerceMyValue(DependencyObject d, object basaValue)
+        {
+            var ud = (NumericUpDown)d;
+            var m = (decimal)basaValue;
+            if (m < ud.MyMinValue) m = ud.MyMinValue;
+            if (m > ud.MyMaxValue) m = ud.MyMaxValue;
+            return m;
+        }
 
 
 
@@ -152,7 +171,69 @@ namespace ControlLibraryCore20200620
 
 
 
-        #endregion
+        //下限値
+        public decimal MyMinValue
+        {
+            get { return (decimal)GetValue(MyMinValueProperty); }
+            set { SetValue(MyMinValueProperty, value); }
+        }
+        public static readonly DependencyProperty MyMinValueProperty =
+            DependencyProperty.Register(nameof(MyMinValue), typeof(decimal), typeof(NumericUpDown),
+                new PropertyMetadata(decimal.MinValue, OnMyMinValuePropertyChanged, CoerceMyMinValue));
+
+        //PropertyChangedコールバック、プロパティ値変更"直後"に実行される
+        //変更された下限値と今の値での矛盾を解消
+        //変更された新しい下限値と、今の値(MyValue)で矛盾が生じた(下限値 < 今の値)場合は、今の値を下限値に変更する
+        private static void OnMyMinValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ud = (NumericUpDown)d;
+            var min = (decimal)e.NewValue;//変更後の新しい下限値
+            if (min > ud.MyValue) ud.MyValue = min;
+        }
+
+        //値の検証と変更
+        //CoerceValueコールバック、プロパティ値変更"直前"に実行される
+        //設定された値を強制(Coerce)的に変更できるので、矛盾があれば変更して解消する
+        //入力された下限値と、今の上限値で矛盾が生じる(下限値 > 上限値)場合は、下限値を上限値に書き換える
+        private static object CoerceMyMinValue(DependencyObject d, object baseValue)
+        {
+            var ud = (NumericUpDown)d;
+            var min = (decimal)baseValue;//入力された下限値
+            if (min > ud.MyMaxValue) min = ud.MyMaxValue;
+            return min;
+        }
+
+
+        //上限値
+        public decimal MyMaxValue
+        {
+            get { return (decimal)GetValue(MyMaxValueProperty); }
+            set { SetValue(MyMaxValueProperty, value); }
+        }
+        public static readonly DependencyProperty MyMaxValueProperty =
+            DependencyProperty.Register(nameof(MyMaxValue), typeof(decimal), typeof(NumericUpDown),
+                new PropertyMetadata(decimal.MaxValue, OnMyMaxValuePropertyChanged, CoerceMyMaxValue));
+
+        //上限値の変更直後の動作。上限値より今の値が大きい場合は、今の値を上限値に変更する
+        private static void OnMyMaxValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ud = (NumericUpDown)d;
+            var max = (decimal)e.NewValue;
+            if (max < ud.MyValue) ud.MyValue = max;
+        }
+
+        //上限値変更直前の動作。入力された上限値が今の下限値より小さくなる場合は、上限値を下限値に書き換える
+        private static object CoerceMyMaxValue(DependencyObject d, object baseValue)
+        {
+            var ud = (NumericUpDown)d;
+            var max = (decimal)baseValue;
+            if (max < ud.MyMinValue) max = ud.MyMinValue;
+            return max;
+        }
+
+
+
+        #endregion 依存関係プロパティ
 
 
 

@@ -10,17 +10,27 @@
   <Grid>
     <Viewbox>
       <StackPanel Margin="10">
-        <TextBlock Text="WPFにもNumericUpDownをユーザーコントロールで、その4"/>
-        <myControl:NumericUpDown Margin="10" MyValue="5" x:Name="nume"/>
-        <Button Content="Set 小変更値 = 0.1" Tag="0.1" Click="Button_Click"/>
-        <Button Content="Set 小変更値 = 1" Tag="1" Click="Button_Click"/>
-        <Button Content="Set 大変更値 = 10" Tag="10" Click="Button_Click_1"/>
-        <Button Content="Set 大変更値 = 100" Tag="100" Click="Button_Click_1"/>
+        <TextBlock Text="WPFにもNumericUpDownをユーザーコントロールで、その5"/>
+        <myControl:NumericUpDown x:Name="nume" Margin="10"
+                                 MyValue="5" MyMinValue="-10" MyMaxValue="20"/>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="今の下限値 = "/>
+          <TextBlock Text="{Binding ElementName=nume, Path=MyMinValue}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="今の上限値 = "/>
+          <TextBlock Text="{Binding ElementName=nume, Path=MyMaxValue}"/>
+        </StackPanel>
+        <Button Content="リセット(値：5、下限値：-10、上限値：20)" Click="Button_Click"/>
+        <Button Content="Set 下限値 = 10" Tag="10" Click="ButtonMin_Click"/>
+        <Button Content="Set 上限値 = 2" Tag="2" Click="ButtonMax_Click"/>
+        <Button Content="Set 下限値 = 30" Tag="30" Click="ButtonMin_Click"/>
+        <Button Content="Set 上限値 = -20" Tag="-20" Click="ButtonMax_Click"/>
         <DockPanel LastChildFill="True" Background="Lavender">
           <TextBlock Text="{Binding ElementName=nume, Path=MyValue}" Margin="10" Width="30"
                      TextAlignment="Right" Background="White"/>
           <Slider Value="{Binding ElementName=nume, Path=MyValue, Mode=TwoWay}" Margin="10"
-                Minimum="-100" Maximum="100"/>
+                Minimum="-50" Maximum="50"/>
         </DockPanel>
       </StackPanel>
     </Viewbox>

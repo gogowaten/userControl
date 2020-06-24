@@ -27,14 +27,22 @@ namespace UserControlDll動作確認用
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var b = (Button)sender;
-            nume.MySmallChange = decimal.Parse(b.Tag.ToString());
+            nume.MyMinValue = -10;
+            nume.MyMaxValue = 20;
+            nume.MyValue = 5;
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+
+        private void ButtonMin_Click(object sender, RoutedEventArgs e)
         {
             var b = (Button)sender;
-            nume.MyLargeChange = decimal.Parse(b.Tag.ToString());
+            nume.MyMinValue = decimal.Parse(b.Tag.ToString());
+        }
+
+        private void ButtonMax_Click(object sender, RoutedEventArgs e)
+        {
+            var b = (Button)sender;
+            nume.MyMaxValue = decimal.Parse(b.Tag.ToString());
         }
     }
 }
