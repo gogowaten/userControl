@@ -63,7 +63,7 @@ namespace ControlLibraryCore20200620
             if (str.Contains(".") && inputStr == ".") { e.Handled = true; return; }
         }
 
-        //フォーカス消失時、不自然な文字を削除
+        //フォーカス消失時、不自然な文字を削除と書式適用
         private void MyTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             //ピリオドの削除
@@ -79,10 +79,10 @@ namespace ControlLibraryCore20200620
             text = text.Replace("-.", "-");
 
             //数値がないのにハイフンやピリオドがあった場合は削除
-            if (text == "-" || text == ".")
-                text = "";
-
-            tb.Text = text;
+            if (text == "-" || text == "." || text == "-0")
+                text = "0";
+            MyText = text;
+            tb.Text = MyValue.ToString(MyStringFormat);
         }
 
         //
@@ -128,12 +128,21 @@ namespace ControlLibraryCore20200620
 
         public static readonly DependencyProperty MyValueProperty =
             DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(NumericUpDown),
-                new PropertyMetadata(0m, OnMyValuePropertyChanged, CoerceMyValue));
+                new FrameworkPropertyMetadata(0m,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnMyValuePropertyChanged, CoerceMyValue));
 
         //MyValueの変更直後の動作
         private static void OnMyValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            //することない
+            var ud = d as NumericUpDown;
+            var m = (decimal)e.NewValue;
+            if (ud.MyTextBox.IsFocused)
+            {
+                ud.MyText = m.ToString();
+            }
+            else
+            {
+                ud.MyText = m.ToString(ud.MyStringFormat);
+            }
         }
 
         //MyValueの変更直前の動作、値の検証、矛盾があれば値を書き換えて解消
@@ -148,6 +157,67 @@ namespace ControlLibraryCore20200620
             return m;
         }
 
+
+        //        wpf - 標準依存プロパティ | wpf Tutorial
+        //https://riptutorial.com/ja/wpf/example/9857/%E6%A8%99%E6%BA%96%E4%BE%9D%E5%AD%98%E3%83%97%E3%83%AD%E3%83%91%E3%83%86%E3%82%A3
+        //より
+        //バインドでMode=TwoWay （ TextBox.Textの動作に類似）を指定する必要性を排除するには、 
+        //PropertyMetadata代わりにFrameworkPropertyMetadataを使用し、適切なフラグを指定するようにコードを更新します。
+        //テキストボックとBindingする
+        public string MyText
+        {
+            get { return (string)GetValue(MyTextProperty); }
+            set { SetValue(MyTextProperty, value); }
+        }
+
+        public static readonly DependencyProperty MyTextProperty =
+            DependencyProperty.Register(nameof(MyText), typeof(string), typeof(NumericUpDown),
+                new FrameworkPropertyMetadata("",FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,OnMyTextPropertyChanged));
+
+        private static void OnMyTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ud = d as NumericUpDown;
+            var s = (string)e.NewValue;
+            if (s == "-0" || s == "-0.") return;
+            if (decimal.TryParse(s, out decimal m))
+            {
+                ud.MyValue = m;
+            }
+        }
+        //書式指定用の文字列型依存関係プロパティ
+        public string MyStringFormat
+        {
+            get { return (string)GetValue(MyStringFormatProperty); }
+            set { SetValue(MyStringFormatProperty, value); }
+        }
+
+        public static readonly DependencyProperty MyStringFormatProperty =
+            DependencyProperty.Register(nameof(MyStringFormat), typeof(string), typeof(NumericUpDown),
+                new PropertyMetadata("", OnMyStrinfFormatChanged, CoerceMyStrinfFormatValue));
+
+        private static void OnMyStrinfFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ud = d as NumericUpDown;
+            var sf = (string)e.NewValue;
+            ud.MyText = ud.MyValue.ToString(sf);
+        }
+        private static object CoerceMyStrinfFormatValue(DependencyObject d, object baseValue)
+        {
+            //新しい書式を適用するとエラーになる場合は、元の書式に書き換える
+            var ud = d as NumericUpDown;
+            var s = (string)baseValue;//新しい書式
+            try
+            {
+                //新しい書式適用
+                ud.MyValue.ToString(s);
+            }
+            catch (Exception)
+            {
+                //エラーなら元の書式に書き換え
+                s = ud.MyStringFormat;
+            }
+            return s;
+        }
 
 
         //小変更値

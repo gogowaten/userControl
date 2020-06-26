@@ -45,8 +45,9 @@
              GotFocus="MyTextBox_GotFocus"
              PreviewMouseLeftButtonDown="MyTextBox_PreviewMouseLeftButtonDown"
              MouseWheel="MyTextBox_MouseWheel"
-             Text="{Binding Path=MyValue, Mode=TwoWay,
-      RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown}}">
+             Text="{Binding Path=MyText, Mode=TwoWay,
+      RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown},
+      UpdateSourceTrigger=PropertyChanged}">
 
     </TextBox>
   </Grid>

@@ -12,25 +12,41 @@
       <StackPanel Margin="10">
         <TextBlock Text="WPFにもNumericUpDownをユーザーコントロールで、その5"/>
         <myControl:NumericUpDown x:Name="nume" Margin="10"
-                                 MyValue="5" MyMinValue="-10" MyMaxValue="20"/>
-        <StackPanel Orientation="Horizontal">
-          <TextBlock Text="今の下限値 = "/>
-          <TextBlock Text="{Binding ElementName=nume, Path=MyMinValue}"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-          <TextBlock Text="今の上限値 = "/>
-          <TextBlock Text="{Binding ElementName=nume, Path=MyMaxValue}"/>
-        </StackPanel>
-        <Button Content="リセット(値：5、下限値：-10、上限値：20)" Click="Button_Click"/>
-        <Button Content="Set 下限値 = 10" Tag="10" Click="ButtonMin_Click"/>
-        <Button Content="Set 上限値 = 2" Tag="2" Click="ButtonMax_Click"/>
-        <Button Content="Set 下限値 = 30" Tag="30" Click="ButtonMin_Click"/>
-        <Button Content="Set 上限値 = -20" Tag="-20" Click="ButtonMax_Click"/>
-        <DockPanel LastChildFill="True" Background="Lavender">
-          <TextBlock Text="{Binding ElementName=nume, Path=MyValue}" Margin="10" Width="30"
-                     TextAlignment="Right" Background="White"/>
-          <Slider Value="{Binding ElementName=nume, Path=MyValue, Mode=TwoWay}" Margin="10"
-                Minimum="-50" Maximum="50"/>
+                                 MyValue="1.52" MyMinValue="-100" MyMaxValue="2000" MyStringFormat="00.00"/>
+        <Slider Value="{Binding ElementName=nume, Path=MyValue, Mode=TwoWay}" Margin="10"
+                Minimum="{Binding ElementName=nume, Path=MyMinValue}"
+                Maximum="{Binding ElementName=nume, Path=MyMaxValue}"/>
+        <DockPanel>
+          <TextBlock Text="書式 = "/>
+          <TextBox Text="{Binding ElementName=nume, Path=MyStringFormat, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+        <DockPanel>
+          <StackPanel>
+            <StackPanel Margin="5">
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="MyText = "/>
+                <TextBlock Text="{Binding ElementName=nume, Path=MyText}"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="MyValue = "/>
+                <TextBlock Text="{Binding ElementName=nume, Path=MyValue}"/>
+              </StackPanel>
+              <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MySmallChange, Mode=TwoWay}"
+                                       MyStringFormat="MySmallChange = 0.000"/>
+              <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MyLargeChange, Mode=TwoWay}"
+                                       MyStringFormat="MyLargeChange = 0.000"/>
+              <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MyMinValue, Mode=TwoWay}"
+                                       MyStringFormat="MyMinValue = 0.00"/>
+              <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MyMaxValue, Mode=TwoWay}"
+                                       MyStringFormat="MyMaxValue = 0.00"/>              
+            </StackPanel>
+            
+          </StackPanel>
+          <StackPanel Margin="5">
+            <Button Content="リセット(値：5、下限値：-10、上限値：20)" Click="Button_Click"/>
+            
+            
+          </StackPanel>          
         </DockPanel>
       </StackPanel>
     </Viewbox>

@@ -33,16 +33,5 @@ namespace UserControlDll動作確認用
         }
 
 
-        private void ButtonMin_Click(object sender, RoutedEventArgs e)
-        {
-            var b = (Button)sender;
-            nume.MyMinValue = decimal.Parse(b.Tag.ToString());
-        }
-
-        private void ButtonMax_Click(object sender, RoutedEventArgs e)
-        {
-            var b = (Button)sender;
-            nume.MyMaxValue = decimal.Parse(b.Tag.ToString());
-        }
     }
 }
