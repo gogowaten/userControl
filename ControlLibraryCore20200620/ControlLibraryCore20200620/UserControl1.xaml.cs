@@ -163,6 +163,7 @@ namespace ControlLibraryCore20200620
         //より
         //バインドでMode=TwoWay （ TextBox.Textの動作に類似）を指定する必要性を排除するには、 
         //PropertyMetadata代わりにFrameworkPropertyMetadataを使用し、適切なフラグを指定するようにコードを更新します。
+
         //テキストボックとBindingする
         public string MyText
         {
@@ -184,6 +185,8 @@ namespace ControlLibraryCore20200620
                 ud.MyValue = m;
             }
         }
+
+
         //書式指定用の文字列型依存関係プロパティ
         public string MyStringFormat
         {

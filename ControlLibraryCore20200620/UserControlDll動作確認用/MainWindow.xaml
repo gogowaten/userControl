@@ -13,9 +13,11 @@
         <TextBlock Text="WPFにもNumericUpDownをユーザーコントロールで、その5"/>
         <myControl:NumericUpDown x:Name="nume" Margin="10"
                                  MyValue="1.52" MyMinValue="-100" MyMaxValue="2000" MyStringFormat="00.00"/>
+        <Separator Background="MediumSlateBlue" BorderBrush="Red" Height="10" BorderThickness="10"/>
         <Slider Value="{Binding ElementName=nume, Path=MyValue, Mode=TwoWay}" Margin="10"
                 Minimum="{Binding ElementName=nume, Path=MyMinValue}"
                 Maximum="{Binding ElementName=nume, Path=MyMaxValue}"/>
+        <Button Content="セット(値：5、下限値：-10、上限値：20)" Click="Button_Click"/>
         <DockPanel>
           <TextBlock Text="書式 = "/>
           <TextBox Text="{Binding ElementName=nume, Path=MyStringFormat, UpdateSourceTrigger=PropertyChanged}"/>
@@ -38,15 +40,15 @@
               <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MyMinValue, Mode=TwoWay}"
                                        MyStringFormat="MyMinValue = 0.00"/>
               <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MyMaxValue, Mode=TwoWay}"
-                                       MyStringFormat="MyMaxValue = 0.00"/>              
+                                       MyStringFormat="MyMaxValue = 0.00"/>
             </StackPanel>
-            
+
           </StackPanel>
           <StackPanel Margin="5">
-            <Button Content="リセット(値：5、下限値：-10、上限値：20)" Click="Button_Click"/>
-            
-            
-          </StackPanel>          
+
+
+
+          </StackPanel>
         </DockPanel>
       </StackPanel>
     </Viewbox>
