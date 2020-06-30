@@ -66,23 +66,49 @@ namespace ControlLibraryCore20200620
         //フォーカス消失時、不自然な文字を削除と書式適用
         private void MyTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            //ピリオドの削除
-            //先頭か末尾にあった場合は削除
             var tb = (TextBox)sender;
             string text = tb.Text;
+
+            //ピリオドが先頭か末尾にあった場合は削除
             if (text.StartsWith('.') || text.EndsWith('.'))
             {
                 text = text.Replace(".", "");
             }
 
-            // -. も変なのでピリオドだけ削除
-            text = text.Replace("-.", "-");
 
-            //数値がないのにハイフンやピリオドがあった場合は削除
-            if (text == "-" || text == "." || text == "-0")
-                text = "0";
-            MyText = text;
-            tb.Text = MyValue.ToString(MyStringFormat);
+            //数値に変換できない文字列なら直前の数値に戻す            
+            if (decimal.TryParse(text, out decimal m) == false)
+            {
+                var old = MyValue;
+                tb.Text = old.ToString(MyStringFormat);
+                MyValue = old;
+                return;
+            }
+            //数値に変換できるなら、その値をセット
+            else
+            {
+                tb.Text = m.ToString(MyStringFormat);
+                MyValue = m;
+            }
+
+
+
+            //// -. も変なのでピリオドだけ削除
+            //text = text.Replace("-.", "-");
+
+            ////数値がないのにハイフンやピリオドがあった場合は削除
+            //if (text == "-" || text == "." || text == "-0")
+            //    text = "0";
+            //tb.Text = text;
+            //if (decimal.TryParse(text, out decimal m))
+            //{
+            //    MyValue = m;
+            //}
+
+            //tb.Text = MyValue.ToString(MyStringFormat);
+            //MyValue = deci;
+
+
         }
 
         //
@@ -95,10 +121,12 @@ namespace ControlLibraryCore20200620
             }
         }
 
-        //focusしたときにテキストを全選択
+        //focusしたとき
+        //MyValueからText生成して表示してテキストを全選択
         private void MyTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             var tb = sender as TextBox;
+            tb.Text = MyValue.ToString();
             tb.SelectAll();
         }
 
@@ -128,7 +156,7 @@ namespace ControlLibraryCore20200620
 
         public static readonly DependencyProperty MyValueProperty =
             DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(NumericUpDown),
-                new FrameworkPropertyMetadata(0m,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnMyValuePropertyChanged, CoerceMyValue));
+                new FrameworkPropertyMetadata(0m, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnMyValuePropertyChanged, CoerceMyValue));
 
         //MyValueの変更直後の動作
         private static void OnMyValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -142,6 +170,7 @@ namespace ControlLibraryCore20200620
             else
             {
                 ud.MyText = m.ToString(ud.MyStringFormat);
+                ud.MyValue = m;//重要！！！！！！！！！！！！！！！！！！！
             }
         }
 
@@ -173,7 +202,7 @@ namespace ControlLibraryCore20200620
 
         public static readonly DependencyProperty MyTextProperty =
             DependencyProperty.Register(nameof(MyText), typeof(string), typeof(NumericUpDown),
-                new FrameworkPropertyMetadata("",FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,OnMyTextPropertyChanged));
+                new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnMyTextPropertyChanged));
 
         private static void OnMyTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -202,24 +231,29 @@ namespace ControlLibraryCore20200620
         {
             var ud = d as NumericUpDown;
             var sf = (string)e.NewValue;
+            decimal m = ud.MyValue;
+            
             ud.MyText = ud.MyValue.ToString(sf);
+            ud.MyValue = m;
         }
         private static object CoerceMyStrinfFormatValue(DependencyObject d, object baseValue)
         {
-            //新しい書式を適用するとエラーになる場合は、元の書式に書き換える
             var ud = d as NumericUpDown;
-            var s = (string)baseValue;//新しい書式
+            var format = (string)baseValue;//新しい書式
+            
+            //新しい書式を適用するとエラーになる場合は、元の書式に書き換える
             try
             {
                 //新しい書式適用
-                ud.MyValue.ToString(s);
+                var text = ud.MyValue.ToString(format);
+                //ud.MyText = ud.MyValue.ToString(format);
             }
             catch (Exception)
             {
                 //エラーなら元の書式に書き換え
-                s = ud.MyStringFormat;
+                format = ud.MyStringFormat;
             }
-            return s;
+            return format;
         }
 
 
