@@ -232,7 +232,7 @@ namespace ControlLibraryCore20200620
             var ud = d as NumericUpDown;
             var sf = (string)e.NewValue;
             decimal m = ud.MyValue;
-            
+
             ud.MyText = ud.MyValue.ToString(sf);
             ud.MyValue = m;
         }
@@ -240,13 +240,26 @@ namespace ControlLibraryCore20200620
         {
             var ud = d as NumericUpDown;
             var format = (string)baseValue;//新しい書式
-            
+
             //新しい書式を適用するとエラーになる場合は、元の書式に書き換える
             try
             {
                 //新しい書式適用
-                var text = ud.MyValue.ToString(format);
-                //ud.MyText = ud.MyValue.ToString(format);
+                var text = ud.MyValue.ToString(format);//エラー判定用
+
+                //書式を数値変換、できなければそのままOK
+                //できた場合は、それが0以外ならエラー認定、頭にハイフンがある場合もエラー認定
+                //もしこれらを通してMyValueをToStringすると、書式の数字が付加されて値が変化してしまうので
+                //MyValueとMyTextの間で無限ループになってしまう
+                if (decimal.TryParse(format, out decimal m))
+                {
+                    decimal v = Math.Abs(m);
+                    if (v != 0 || format.StartsWith("-"))
+                    {
+                        throw new Exception();
+                    }
+                }
+
             }
             catch (Exception)
             {
@@ -343,6 +356,12 @@ namespace ControlLibraryCore20200620
         #endregion 依存関係プロパティ
 
 
+        public override string ToString()
+        {
+            string s = "MyText = " + MyText + ", MyValue = " + MyValue.ToString();
+            return s;
+        }
+
 
         private void RepeatButtonUp_Click(object sender, RoutedEventArgs e)
         {
@@ -365,5 +384,7 @@ namespace ControlLibraryCore20200620
             if (e.Delta < 0) MyValue -= MySmallChange;
             else MyValue += MySmallChange;
         }
+
+ 
     }
 }

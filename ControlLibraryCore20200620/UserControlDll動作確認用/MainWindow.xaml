@@ -6,12 +6,24 @@
         xmlns:local="clr-namespace:UserControlDll動作確認用"
         xmlns:myControl="clr-namespace:ControlLibraryCore20200620;assembly=ControlLibraryCore20200620"
         mc:Ignorable="d"
-        Title="動作確認用MainWindow" Height="400" Width="420">
+        Title="動作確認用MainWindow" Height="500" Width="520">
   <Grid>
     <Viewbox>
       <StackPanel Margin="10">
+        
         <TextBlock Text="WPFにもNumericUpDownをユーザーコントロールで、その5"/>
-        <myControl:NumericUpDown x:Name="nume" Margin="10" Height="50" FontSize="28"
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="MyText = "/>
+          <TextBlock Text="{Binding ElementName=nume, Path=MyText}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="MyValue = "/>
+          <TextBlock Text="{Binding ElementName=nume, Path=MyValue}"/>
+        </StackPanel>
+
+        <Border Background="MediumSlateBlue" Height="2"/>
+        
+        <myControl:NumericUpDown x:Name="nume" Margin="10" Height="38" FontSize="24"
                                  MyValue="1.52" MyMinValue="-100" MyMaxValue="2000" MyStringFormat="0.0"/>
 
         <Border Background="MediumSlateBlue" Height="2"/>
@@ -24,33 +36,17 @@
           <TextBlock Text="書式 = "/>
           <TextBox Text="{Binding ElementName=nume, Path=MyStringFormat, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
-        <StackPanel>
-          <StackPanel>
-            <StackPanel Margin="5">
-              <StackPanel Orientation="Horizontal">
-                <TextBlock Text="MyText = "/>
-                <TextBlock Text="{Binding ElementName=nume, Path=MyText}"/>
-              </StackPanel>
-              <StackPanel Orientation="Horizontal">
-                <TextBlock Text="MyValue = "/>
-                <TextBlock Text="{Binding ElementName=nume, Path=MyValue}"/>
-              </StackPanel>
-              <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MySmallChange, Mode=TwoWay}"
-                                       MyStringFormat="MySmallChange = 0.0"/>
-              <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MyLargeChange, Mode=TwoWay}"
+
+
+        <StackPanel Margin="5">
+          <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MySmallChange, Mode=TwoWay}"
+                                       MyStringFormat="MySmallChange = 0.00" MySmallChange="0.1"/>
+          <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MyLargeChange, Mode=TwoWay}"
                                        MyStringFormat="MyLargeChange = 0.0"/>
-              <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MyMinValue, Mode=TwoWay}"
+          <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MyMinValue, Mode=TwoWay}"
                                        MyStringFormat="MyMinValue = 0.0"/>
-              <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MyMaxValue, Mode=TwoWay}"
+          <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MyMaxValue, Mode=TwoWay}"
                                        MyStringFormat="MyMaxValue = 0.0"/>
-            </StackPanel>
-
-          </StackPanel>
-          <StackPanel Margin="5">
-
-
-
-          </StackPanel>
         </StackPanel>
       </StackPanel>
     </Viewbox>
