@@ -179,7 +179,7 @@ namespace ControlLibraryCore20200620
         //入力された値が上限値より大きい場合は上限値に書き換え
         private static object CoerceMyValue(DependencyObject d, object basaValue)
         {
-            var ud = (NumericUpDown)d;
+            var ud = d as NumericUpDown;
             var m = (decimal)basaValue;
             if (m < ud.MyMinValue) m = ud.MyMinValue;
             if (m > ud.MyMaxValue) m = ud.MyMaxValue;
@@ -241,32 +241,47 @@ namespace ControlLibraryCore20200620
             var ud = d as NumericUpDown;
             var format = (string)baseValue;//新しい書式
 
-            //新しい書式を適用するとエラーになる場合は、元の書式に書き換える
+            //;
+            var neko = format.Split(";");
+
+
+            //新しい書式が不適切なものだった場合は、元の書式に書き換え
             try
             {
-                //新しい書式適用
-                var text = ud.MyValue.ToString(format);//エラー判定用
-
-                //書式を数値変換、できなければそのままOK
-                //できた場合は、それが0以外ならエラー認定、頭にハイフンがある場合もエラー認定
-                //もしこれらを通してMyValueをToStringすると、書式の数字が付加されて値が変化してしまうので
-                //MyValueとMyTextの間で無限ループになってしまう
-                if (decimal.TryParse(format, out decimal m))
+                foreach (var item in neko)
                 {
-                    decimal v = Math.Abs(m);
-                    if (v != 0 || format.StartsWith("-"))
+                    //新しい書式適用してみてエラーならcatchに飛ぶ
+                    var text = ud.MyValue.ToString(item);//エラー判定用
+
+                    //エラーにはならないけど無限ループになる書式はエラーにしてcatchに飛ばす
+
+                    //無限ループになる書式
+                    //数値に変換できる、かつ
+                    //  ┣ 0以外
+                    //  ┣ 先頭がハイフン
+                    //  ┗ 「,.」が含まれている
+
+                    //もしこれらを通してMyValueをToStringすると、書式の数字が付加されて値が変化してしまうので
+                    //MyValueとMyTextの間で無限ループになってしまう
+                    if (decimal.TryParse(item, out decimal m))
                     {
-                        throw new Exception();
+                        decimal v = Math.Abs(m);
+                        if (v != 0 || item.StartsWith("-") || item.Contains(",."))
+                        {
+                            throw new Exception("akan");//catchへ
+                        }
                     }
                 }
+                
 
             }
             catch (Exception)
             {
-                //エラーなら元の書式に書き換え
+                //元の書式に書き換え
                 format = ud.MyStringFormat;
             }
             return format;
+            
         }
 
 
