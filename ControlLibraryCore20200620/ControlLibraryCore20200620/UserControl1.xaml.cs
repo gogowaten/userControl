@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -169,7 +170,8 @@ namespace ControlLibraryCore20200620
             }
             else
             {
-                ud.MyText = m.ToString(ud.MyStringFormat);
+                var text = m.ToString(ud.MyStringFormat);
+                ud.MyText = text;
                 ud.MyValue = m;//重要！！！！！！！！！！！！！！！！！！！
             }
         }
@@ -216,6 +218,10 @@ namespace ControlLibraryCore20200620
         }
 
 
+
+
+        //リアルタイム更新で書式指定は無理がある？
+
         //書式指定用の文字列型依存関係プロパティ
         public string MyStringFormat
         {
@@ -235,53 +241,69 @@ namespace ControlLibraryCore20200620
 
             ud.MyText = ud.MyValue.ToString(sf);
             ud.MyValue = m;
+
         }
+
+        //新しい書式の判定、不適切な場合は古い書式で上書きする
         private static object CoerceMyStrinfFormatValue(DependencyObject d, object baseValue)
         {
             var ud = d as NumericUpDown;
             var format = (string)baseValue;//新しい書式
 
-            //;
+            //正の値、負の値、0のときで書式を変えられる
+            //セミコロンで区切る
+            //(正の値書式 ; 負の値書式 ; 0の書式)
+
+            //無限ループになる書式は数値に変換できる、かつ
+            // ┣ 0以外
+            // ┣ 「,.」が含まれている
+            // ┣ 正の値の書式の先頭がハイフン
+            // ┗ 負の値の書式の先頭がハイフンではない            
+            //MyValueとMyTextのCallback間で無限ループになってStackOverflowになってしまう
+
+            //正、負、0、それぞれを判定するため「;」で文字列を分割
             var neko = format.Split(";");
-
-
-            //新しい書式が不適切なものだった場合は、元の書式に書き換え
-            try
+            for (int i = 0; i < neko.Length; i++)
             {
-                foreach (var item in neko)
+                string sf = neko[i];
+                if (decimal.TryParse(sf, out decimal m))
+                {
+                    if (Math.Abs(m) != 0 || sf.Contains(",."))
+                    {
+                        return ud.MyStringFormat;
+                    }
+                    if (i == 0 && sf.StartsWith("-"))
+                    {
+                        return ud.MyStringFormat;
+                    }
+                    if(i==1 && sf.StartsWith("-") == false)
+                    {
+                        return ud.MyStringFormat;
+                    }
+                }
+                try
                 {
                     //新しい書式適用してみてエラーならcatchに飛ぶ
-                    var text = ud.MyValue.ToString(item);//エラー判定用
+                    var text = ud.MyValue.ToString(format);
 
-                    //エラーにはならないけど無限ループになる書式はエラーにしてcatchに飛ばす
-
-                    //無限ループになる書式
-                    //数値に変換できる、かつ
-                    //  ┣ 0以外
-                    //  ┣ 先頭がハイフン
-                    //  ┗ 「,.」が含まれている
-
-                    //もしこれらを通してMyValueをToStringすると、書式の数字が付加されて値が変化してしまうので
-                    //MyValueとMyTextの間で無限ループになってしまう
-                    if (decimal.TryParse(item, out decimal m))
+                    //正の値が負の値に変化するような書式も弾く
+                    decimal dc = 1m;
+                    if (decimal.TryParse(dc.ToString(format), out decimal dd))
                     {
-                        decimal v = Math.Abs(m);
-                        if (v != 0 || item.StartsWith("-") || item.Contains(",."))
+                        //「-.」や「-,.」などは「-」と同じ効果で、正の値が負の値に反転する
+                        if (dd == -1m)
                         {
-                            throw new Exception("akan");//catchへ
+                            return ud.MyStringFormat;
                         }
                     }
                 }
-                
+                catch (Exception)
+                {
+                    return ud.MyStringFormat;
+                }
+            }
 
-            }
-            catch (Exception)
-            {
-                //元の書式に書き換え
-                format = ud.MyStringFormat;
-            }
             return format;
-            
         }
 
 
@@ -400,6 +422,6 @@ namespace ControlLibraryCore20200620
             else MyValue += MySmallChange;
         }
 
- 
+
     }
 }

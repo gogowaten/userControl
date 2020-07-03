@@ -23,6 +23,22 @@ namespace UserControlDll動作確認用
         public MainWindow()
         {
             InitializeComponent();
+
+            //string s = "-,0";
+            //decimal m = 123m;
+            //var neko = m.ToString(s);
+            //////var inu = -m == decimal.Parse(neko);
+            //s = ",.";
+            ////neko = m.ToString(s);
+            ////s = "j";
+            ////neko = m.ToString(s);
+            //neko = 123m.ToString(".0");
+            //neko = 123m.ToString(",.0");
+            //neko = 123m.ToString("0,.");
+            //neko = 123m.ToString("0.");
+            //neko = 123m.ToString("0,");
+            //neko = 123m.ToString(";");
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
