@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -423,5 +424,24 @@ namespace ControlLibraryCore20200620
         }
 
 
+    }
+
+
+
+    //未使用、これ使うと-0.とか0.が入力できない
+    public class MyValueRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            if(decimal.TryParse((string)value,out decimal m))
+            {
+                //return new ValidationResult(true, null);
+                return ValidationResult.ValidResult;
+            }
+            else
+            {
+                return new ValidationResult(false, "数値じゃない");
+            }
+        }
     }
 }

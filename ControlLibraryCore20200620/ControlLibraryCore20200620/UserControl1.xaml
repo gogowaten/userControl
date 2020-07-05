@@ -35,6 +35,27 @@
       </RepeatButton.Content>
     </RepeatButton>
 
+    <!--<TextBox x:Name="MyTextBox" Grid.RowSpan="2" Grid.Column="0"
+             TextAlignment="Right" VerticalContentAlignment="Center"
+             InputMethod.IsInputMethodSuspended="True"
+             PreviewKeyDown="MyTextBox_PreviewKeyDown"
+             PreviewTextInput="MyTextBox_PreviewTextInput"
+             LostFocus="MyTextBox_LostFocus"
+             CommandManager.PreviewExecuted="MyTextBox_PreviewExecuted"
+             GotFocus="MyTextBox_GotFocus"
+             PreviewMouseLeftButtonDown="MyTextBox_PreviewMouseLeftButtonDown"
+             MouseWheel="MyTextBox_MouseWheel">
+      <TextBox.Text>
+        <Binding Path="MyValue" Mode="TwoWay"
+                 RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown}"
+                 UpdateSourceTrigger="PropertyChanged">
+          <Binding.ValidationRules>
+            <local:MyValueRule/>
+          </Binding.ValidationRules>
+        </Binding>
+      </TextBox.Text>
+    </TextBox>-->
+    
     <TextBox x:Name="MyTextBox" Grid.RowSpan="2" Grid.Column="0"
              TextAlignment="Right" VerticalContentAlignment="Center"
              InputMethod.IsInputMethodSuspended="True"
@@ -48,7 +69,7 @@
              Text="{Binding Path=MyText, Mode=TwoWay,
       RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown},
       UpdateSourceTrigger=PropertyChanged}">
-
     </TextBox>
+    
   </Grid>
 </UserControl>
