@@ -197,7 +197,7 @@ namespace ControlLibraryCore20200620
         //PropertyMetadata代わりにFrameworkPropertyMetadataを使用し、適切なフラグを指定するようにコードを更新します。
 
         //テキストボックとBindingする
-        public string MyText
+        protected internal string MyText
         {
             get { return (string)GetValue(MyTextProperty); }
             set { SetValue(MyTextProperty, value); }
