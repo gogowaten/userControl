@@ -1,0 +1,17 @@
+﻿<Window x:Class="動作確認2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:動作確認2"
+        xmlns:uc="clr-namespace:ControlLibraryCore20200620;assembly=ControlLibraryCore20200620"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="200" Width="400">
+    <Grid>
+    <StackPanel>
+      <uc:NumericUpDown Name="myUc1" Height="50" Width="200"/>
+      <uc:NumericUpDown MyValue="{Binding ElementName=myUc1, Path=MyWidth}"/>
+      <TextBox Text="test" FontSize="50"/>
+    </StackPanel>
+    </Grid>
+</Window>

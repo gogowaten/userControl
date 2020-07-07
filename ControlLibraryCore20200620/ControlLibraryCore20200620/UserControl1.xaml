@@ -13,7 +13,7 @@
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>
-      <ColumnDefinition Width="16"/>
+      <ColumnDefinition Width="{Binding Path=MyWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown}}"  MinWidth="16"/>
     </Grid.ColumnDefinitions>
 
     <RepeatButton Grid.Row="0" Grid.Column="1" IsTabStop="False" Background="AliceBlue"
@@ -66,6 +66,7 @@
              GotFocus="MyTextBox_GotFocus"
              PreviewMouseLeftButtonDown="MyTextBox_PreviewMouseLeftButtonDown"
              MouseWheel="MyTextBox_MouseWheel"
+             FontSize="20"
              Text="{Binding Path=MyText, Mode=TwoWay,
       RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown},
       UpdateSourceTrigger=PropertyChanged}">

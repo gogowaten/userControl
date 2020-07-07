@@ -394,6 +394,25 @@ namespace ControlLibraryCore20200620
         #endregion 依存関係プロパティ
 
 
+
+        public double MyWidth
+        {
+            get { return (double)GetValue(MyWidthProperty); }
+            set { SetValue(MyWidthProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyWidth.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MyWidthProperty =
+            DependencyProperty.Register("MyWidth", typeof(double), typeof(NumericUpDown), new PropertyMetadata(16.0));
+
+        private static void OnMyWidthPropertyChanged(DependencyObject d,DependencyPropertyChangedEventArgs e)
+        {
+            
+        }
+
+
+
+
         public override string ToString()
         {
             string s = "MyText = " + MyText + ", MyValue = " + MyValue.ToString();
