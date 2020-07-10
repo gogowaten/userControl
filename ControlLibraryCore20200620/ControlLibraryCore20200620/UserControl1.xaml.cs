@@ -148,7 +148,7 @@ namespace ControlLibraryCore20200620
 
 
         #region 依存関係プロパティ
-
+        #region MyValue, MyText
         //要の値
         public decimal MyValue
         {
@@ -218,9 +218,9 @@ namespace ControlLibraryCore20200620
             }
         }
 
+        #endregion MyValue, MyText
 
-
-
+        #region StringFormat
         //リアルタイム更新で書式指定は無理がある？
 
         //書式指定用の文字列型依存関係プロパティ
@@ -306,8 +306,9 @@ namespace ControlLibraryCore20200620
 
             return format;
         }
+        #endregion StringFormat
 
-
+        #region Small, Large, Min, Max
         //小変更値
         public decimal MySmallChange
         {
@@ -388,6 +389,31 @@ namespace ControlLibraryCore20200620
             if (max < ud.MyMinValue) max = ud.MyMinValue;
             return max;
         }
+        #endregion Small, Large, Min, Max
+
+
+        //ボタンの▲の色
+        public SolidColorBrush MyButtonMarkColor
+        {
+            get { return (SolidColorBrush)GetValue(MyButtonMarkColorProperty); }
+            set { SetValue(MyButtonMarkColorProperty, value); }
+        }
+
+        public static readonly DependencyProperty MyButtonMarkColorProperty =
+            DependencyProperty.Register(nameof(MyButtonMarkColor), typeof(SolidColorBrush), typeof(NumericUpDown),
+                new PropertyMetadata(new SolidColorBrush(Colors.DarkGray)));
+
+
+
+        public TextAlignment MyTextAlignment
+        {
+            get { return (TextAlignment)GetValue(textAlignmentProperty); }
+            set { SetValue(textAlignmentProperty, value); }
+        }
+
+        public static readonly DependencyProperty textAlignmentProperty =
+            DependencyProperty.Register(nameof(MyTextAlignment), typeof(TextAlignment), typeof(NumericUpDown), new PropertyMetadata(TextAlignment.Right));
+
 
 
 
@@ -427,21 +453,37 @@ namespace ControlLibraryCore20200620
     }
 
 
-
-    //未使用、これ使うと-0.とか0.が入力できない
-    public class MyValueRule : ValidationRule
+    //RepeatButtonのWidthはUserControl全体のHeightから計算する用のコンバータ
+    public class MyConverter : IValueConverter
     {
-        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(decimal.TryParse((string)value,out decimal m))
-            {
-                //return new ValidationResult(true, null);
-                return ValidationResult.ValidResult;
-            }
-            else
-            {
-                return new ValidationResult(false, "数値じゃない");
-            }
+            double d = (double)value;//全体のHeight
+            double width = d / 3.0;//1/2以下だと無限ループになる、1/2.1～1/3あたりがいい
+            return width;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
+
+
+    ////未使用、これ使うと-0.とか0.が入力できない
+    //public class MyValueRule : ValidationRule
+    //{
+    //    public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+    //    {
+    //        if(decimal.TryParse((string)value,out decimal m))
+    //        {
+    //            //return new ValidationResult(true, null);
+    //            return ValidationResult.ValidResult;
+    //        }
+    //        else
+    //        {
+    //            return new ValidationResult(false, "数値じゃない");
+    //        }
+    //    }
+    //}
 }
