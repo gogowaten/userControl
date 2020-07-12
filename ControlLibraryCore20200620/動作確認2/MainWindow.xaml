@@ -10,7 +10,7 @@
     <Grid>
     <StackPanel>
       <uc:NumericUpDown Name="myUc1" Height="50" Width="200"/>
-      <uc:NumericUpDown MyValue="{Binding ElementName=myUc1, Path=MyWidth}"/>
+      <uc:NumericUpDown MyValue="{Binding ElementName=myUc1, Path=MyValue}"/>
       <TextBox Text="test" FontSize="50"/>
     </StackPanel>
     </Grid>
