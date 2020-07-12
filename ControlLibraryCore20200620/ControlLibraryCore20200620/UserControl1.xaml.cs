@@ -392,7 +392,7 @@ namespace ControlLibraryCore20200620
         #endregion Small, Large, Min, Max
 
 
-        //ボタンの▲の色
+        //ボタンの▲と▼の色指定、Colorsの色名or#xxxxxxを指定
         public SolidColorBrush MyButtonMarkColor
         {
             get { return (SolidColorBrush)GetValue(MyButtonMarkColorProperty); }
@@ -404,7 +404,7 @@ namespace ControlLibraryCore20200620
                 new PropertyMetadata(new SolidColorBrush(Colors.DarkGray)));
 
 
-
+        //数字の表示位置、TextAlignmentを指定、既定値は右寄せ
         public TextAlignment MyTextAlignment
         {
             get { return (TextAlignment)GetValue(textAlignmentProperty); }
@@ -412,7 +412,8 @@ namespace ControlLibraryCore20200620
         }
 
         public static readonly DependencyProperty textAlignmentProperty =
-            DependencyProperty.Register(nameof(MyTextAlignment), typeof(TextAlignment), typeof(NumericUpDown), new PropertyMetadata(TextAlignment.Right));
+            DependencyProperty.Register(nameof(MyTextAlignment), typeof(TextAlignment), typeof(NumericUpDown),
+                new PropertyMetadata(TextAlignment.Right));
 
 
 
