@@ -21,10 +21,11 @@
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>
       <ColumnDefinition MinWidth="12"
-                        Width="{Binding ElementName=MyRootPanel,
-                                        Path=ActualHeight,
-                                        Mode=OneWay,
-                                        Converter={StaticResource ButtonHeight}}"/>
+                        Width="{Binding
+                            ElementName=MyRootPanel,
+                            Path=ActualHeight,
+                            Mode=OneWay,
+                            Converter={StaticResource ButtonHeight}}"/>
       <!--<ColumnDefinition Width="12"/>-->
     </Grid.ColumnDefinitions>
     <RepeatButton Grid.Row="0" Grid.Column="1" IsTabStop="False"
