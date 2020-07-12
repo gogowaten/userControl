@@ -7,48 +7,75 @@
         xmlns:myControl="clr-namespace:ControlLibraryCore20200620;assembly=ControlLibraryCore20200620"
         mc:Ignorable="d"
         Title="動作確認用MainWindow" Height="500" Width="520">
-  <Grid>
-    <Viewbox>
+  <Window.Resources>
+    <Style TargetType="TextBlock">
+      <Setter Property="Foreground" Value="White"/>
+    </Style>
+  </Window.Resources>
+  <Grid Background="Black">
+    <Grid>
       <StackPanel Margin="10">
         
-        <TextBlock Text="WPFにもNumericUpDownをユーザーコントロールで、その6"/>
-        <StackPanel Orientation="Horizontal">
+        <TextBlock Text="WPFにもNumericUpDownをユーザーコントロールで、その7"/>
+        <!--<StackPanel Orientation="Horizontal">
           <TextBlock Text="MyText = "/>
           <TextBlock Text="{Binding ElementName=nume, Path=MyText}"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
           <TextBlock Text="MyValue = "/>
           <TextBlock Text="{Binding ElementName=nume, Path=MyValue}"/>
-        </StackPanel>
+        </StackPanel>-->
 
+       
         <Border Background="MediumSlateBlue" Height="2"/>
-        
-        <myControl:NumericUpDown x:Name="nume" Margin="10" Height="38" FontSize="24"
-                                 MyValue="1.52" MyMinValue="-100" MyMaxValue="2000" MyStringFormat="0.0"/>
-
-        <Border Background="MediumSlateBlue" Height="2"/>
-
-        <Slider Value="{Binding ElementName=nume, Path=MyValue, Mode=TwoWay}" Margin="10"
+        <DockPanel Margin="10">
+          <TextBlock Text="{Binding ElementName=nume, Path=MyValue, StringFormat=MyValue \= 0}" Width="100"/>
+        <Slider Value="{Binding ElementName=nume, Path=MyValue, Mode=TwoWay}"
                 Minimum="{Binding ElementName=nume, Path=MyMinValue}"
                 Maximum="{Binding ElementName=nume, Path=MyMaxValue}"/>
+        </DockPanel>
         <!--<Button Content="セット(値：5、下限値：-10、上限値：20)" Click="Button_Click"/>-->
-        <DockPanel>
+        <!--<DockPanel>
           <TextBlock Text="書式 = "/>
           <TextBox Text="{Binding ElementName=nume, Path=MyStringFormat, UpdateSourceTrigger=PropertyChanged}"/>
-        </DockPanel>
+        </DockPanel>-->
 
 
         <StackPanel Margin="5">
+          <StackPanel.Resources>
+            <Style TargetType="myControl:NumericUpDown">
+              <Setter Property="Margin" Value="4"/>
+            </Style>
+          </StackPanel.Resources>
           <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MySmallChange, Mode=TwoWay}"
-                                       MyStringFormat="MySmallChange = 0.00" MySmallChange="0.1"/>
+                                   MyStringFormat="MySmallChange = 0.00"
+                                   MySmallChange="0.1"/>
           <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MyLargeChange, Mode=TwoWay}"
-                                       MyStringFormat="MyLargeChange = 0.0"/>
+                                   MyStringFormat="MyLargeChange = 0.0"
+                                   Background="Transparent" BorderBrush="Magenta" Foreground="Magenta" MyButtonMarkColor="Magenta"/>
           <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MyMinValue, Mode=TwoWay}"
-                                       MyStringFormat="MyMinValue = 0.0"/>
+                                   MyStringFormat="MyMinValue = 0.0"
+                                   BorderBrush="Transparent" Background="Transparent" Foreground="White" MyButtonMarkColor="White"/>
           <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=MyMaxValue, Mode=TwoWay}"
-                                       MyStringFormat="MyMaxValue = 0.0"/>
+                                   MyStringFormat="MyMaxValue = 0.0" MyTextAlignment="Center"
+                                   BorderBrush="Transparent" Background="LimeGreen" Foreground="White" MyButtonMarkColor="White"/>
+          <myControl:NumericUpDown MyValue="{Binding ElementName=nume, Path=FontSize, Mode=TwoWay}"
+                                   MyStringFormat="FontSize = 0.0" MyTextAlignment="Left"
+                                   Background="Transparent" BorderBrush="Cyan" Foreground="White" MyButtonMarkColor="Cyan"/>
         </StackPanel>
+        <Border Background="MediumSlateBlue" Height="2"/>
+        <DockPanel Margin="10">
+          <TextBlock Text="{Binding ElementName=nume, Path=FontSize, StringFormat=FontSize \= 0}" Width="100"/>
+          <Slider Value="{Binding ElementName=nume, Path=FontSize}"
+                  Minimum="1" Maximum="100"/>
+        </DockPanel>
+
+        <myControl:NumericUpDown x:Name="nume" Margin="10" Height="auto" FontSize="50" MyTextAlignment="Right"
+                                 Foreground="Yellow" Background="Blue" BorderBrush="Red" MyButtonMarkColor="Cyan"
+                                 FontFamily="HGP創英角ﾎﾟｯﾌﾟ体"
+                                 MyValue="100" MyMinValue="-100" MyMaxValue="2000" MyStringFormat="0.0"/>
+
       </StackPanel>
-    </Viewbox>
+    </Grid>
   </Grid>
 </Window>

@@ -5,7 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControlLibraryCore20200620"
              mc:Ignorable="d" 
-             d:DesignHeight="40" d:DesignWidth="200">
+             d:DesignHeight="40" d:DesignWidth="200"
+             x:Name="MyRootPanel"
+             BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+             Background="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}">
+             <!--BorderBrush="Red">-->
+  <UserControl.Resources>
+    <local:MyConverter x:Key="ButtonHeight"/>
+  </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition/>
@@ -13,51 +20,60 @@
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>
-      <ColumnDefinition Width="{Binding Path=MyWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown}}"  MinWidth="16"/>
+      <ColumnDefinition MinWidth="12"
+                        Width="{Binding
+                            ElementName=MyRootPanel,
+                            Path=ActualHeight,
+                            Mode=OneWay,
+                            Converter={StaticResource ButtonHeight}}"/>
+      <!--<ColumnDefinition Width="12"/>-->
     </Grid.ColumnDefinitions>
-
-    <RepeatButton Grid.Row="0" Grid.Column="1" IsTabStop="False" Background="AliceBlue"
+    <RepeatButton Grid.Row="0" Grid.Column="1" IsTabStop="False"
                   Click="RepeatButtonUp_Click"
-                  MouseWheel="RepeatButton_MouseWheel">
+                  MouseWheel="RepeatButton_MouseWheel"
+                  BorderThickness="0"
+                  Background="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                      AncestorType=local:NumericUpDown},
+                                       Path=Background,
+                                       Mode=OneWay,
+                                       UpdateSourceTrigger=PropertyChanged}"
+                  >
       <RepeatButton.Content>
         <Viewbox x:Name="ViewBoxUp" Margin="1">
-          <Polygon Points="1,0 2,1 0,1 1,0" Fill="MediumSlateBlue"/>
+          <!--<Polygon Points="1,0 2,2 0,2 1,0"
+                   Fill=
+                   "{Binding
+                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown},
+                    Path=MyButtonMarkColor, Mode=OneWay}"/>-->
+          <Polygon Points="1,0 2,2 0,2 1,0" Fill="{Binding ElementName=MyRootPanel, Path=MyButtonMarkColor, Mode=OneWay}"/>
+          <!--<Polygon Points="1,0 2,1 0,1 1,0" Fill="MediumSlateBlue"/>-->
         </Viewbox>
       </RepeatButton.Content>
     </RepeatButton>
-    <RepeatButton Grid.Row="1" Grid.Column="1" IsTabStop="False" Background="AliceBlue"
+    
+    <RepeatButton Grid.Row="1" Grid.Column="1" IsTabStop="False"
                   Click="RepeatButtonDown_Click"
-                  MouseWheel="RepeatButton_MouseWheel">
+                  MouseWheel="RepeatButton_MouseWheel"
+                  BorderThickness="0"
+                  Background="{Binding
+                      ElementName=MyRootPanel,
+                      Path=Background,
+                      UpdateSourceTrigger=PropertyChanged}">
       <RepeatButton.Content>
         <Viewbox x:Name="ViewBoxDown" Margin="1">
-          <Polygon Points="0,0 2,0 1,1 0,0" Fill="MediumSlateBlue"/>
+          <Polygon Points="0,0 2,0 1,2 0,0"
+                   Fill="{Binding 
+                      ElementName=MyRootPanel, 
+                      Path=MyButtonMarkColor,
+                      Mode=TwoWay}"/>
+          <!--<Polygon Points="0,0 2,0 1,1 0,0" Fill="MediumSlateBlue"/>-->
         </Viewbox>
-      </RepeatButton.Content>
+      </RepeatButton.Content>      
     </RepeatButton>
+   
 
-    <!--<TextBox x:Name="MyTextBox" Grid.RowSpan="2" Grid.Column="0"
-             TextAlignment="Right" VerticalContentAlignment="Center"
-             InputMethod.IsInputMethodSuspended="True"
-             PreviewKeyDown="MyTextBox_PreviewKeyDown"
-             PreviewTextInput="MyTextBox_PreviewTextInput"
-             LostFocus="MyTextBox_LostFocus"
-             CommandManager.PreviewExecuted="MyTextBox_PreviewExecuted"
-             GotFocus="MyTextBox_GotFocus"
-             PreviewMouseLeftButtonDown="MyTextBox_PreviewMouseLeftButtonDown"
-             MouseWheel="MyTextBox_MouseWheel">
-      <TextBox.Text>
-        <Binding Path="MyValue" Mode="TwoWay"
-                 RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown}"
-                 UpdateSourceTrigger="PropertyChanged">
-          <Binding.ValidationRules>
-            <local:MyValueRule/>
-          </Binding.ValidationRules>
-        </Binding>
-      </TextBox.Text>
-    </TextBox>-->
-    
     <TextBox x:Name="MyTextBox" Grid.RowSpan="2" Grid.Column="0"
-             TextAlignment="Right" VerticalContentAlignment="Center"
+             VerticalContentAlignment="Center"
              InputMethod.IsInputMethodSuspended="True"
              PreviewKeyDown="MyTextBox_PreviewKeyDown"
              PreviewTextInput="MyTextBox_PreviewTextInput"
@@ -66,11 +82,38 @@
              GotFocus="MyTextBox_GotFocus"
              PreviewMouseLeftButtonDown="MyTextBox_PreviewMouseLeftButtonDown"
              MouseWheel="MyTextBox_MouseWheel"
-             FontSize="20"
-             Text="{Binding Path=MyText, Mode=TwoWay,
-      RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown},
-      UpdateSourceTrigger=PropertyChanged}">
+             Text="{Binding
+                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown},
+                Path=MyText,
+                Mode=TwoWay,
+                UpdateSourceTrigger=PropertyChanged}"
+             FontSize="{Binding
+                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown},
+                Path=FontSize,
+                Mode=OneWay,
+                UpdateSourceTrigger=PropertyChanged}"
+             Foreground="{Binding
+                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown},
+                Path=Foreground,
+                Mode=OneWay,
+                UpdateSourceTrigger=PropertyChanged}"
+             Background="{Binding
+                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown},
+                Path=Background,
+                Mode=OneWay,
+                UpdateSourceTrigger=PropertyChanged}"
+             BorderBrush="{Binding
+                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown},
+                Path=BorderBrush,
+                Mode=OneWay,
+                UpdateSourceTrigger=PropertyChanged}"
+             TextAlignment="{Binding
+                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:NumericUpDown},
+                Path=MyTextAlignment,
+                Mode=OneWay,
+                UpdateSourceTrigger=PropertyChanged}"
+             >
     </TextBox>
-    
+
   </Grid>
 </UserControl>
