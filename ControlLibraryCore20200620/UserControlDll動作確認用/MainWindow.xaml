@@ -73,8 +73,9 @@
         <myControl:NumericUpDown x:Name="nume" Margin="10" Height="auto" FontSize="50" MyTextAlignment="Right"
                                  Foreground="Yellow" Background="Blue" BorderBrush="Red" MyButtonMarkColor="Cyan"
                                  FontFamily="HGP創英角ﾎﾟｯﾌﾟ体"
-                                 MyValue="100" MyMinValue="-100" MyMaxValue="2000" MyStringFormat="0.0"/>
-
+                                 MyValue="100" MyMinValue="-100" MyMaxValue="2000" MyStringFormat="0.0"
+                                 MyValueChanged="nume_MyValueChanged"/>
+        <Label Name="MyLabel" Foreground="AliceBlue" Content="ValueChangedイベント確認用ラベル"/>
       </StackPanel>
     </Grid>
   </Grid>

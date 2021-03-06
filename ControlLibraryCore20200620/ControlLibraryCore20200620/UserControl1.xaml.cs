@@ -160,21 +160,45 @@ namespace ControlLibraryCore20200620
             DependencyProperty.Register(nameof(MyValue), typeof(decimal), typeof(NumericUpDown),
                 new FrameworkPropertyMetadata(0m, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnMyValuePropertyChanged, CoerceMyValue));
 
+        #region ValueChangedイベント
+        public delegate void MyValueChangedEventHndler(object sender, MyValuechangedEventArgs e);
+        protected virtual void OnMyValueChanged(MyValuechangedEventArgs e)
+        {
+            RaiseEvent(e);
+        }
+        public static readonly RoutedEvent MyValueChangedEvent =
+            EventManager.RegisterRoutedEvent(
+                nameof(MyValueChanged),
+                RoutingStrategy.Bubble,
+                typeof(MyValueChangedEventHndler),
+                typeof(NumericUpDown));
+        
+        public event MyValueChangedEventHndler MyValueChanged
+        {
+            add { AddHandler(MyValueChangedEvent, value); }
+            remove { RemoveHandler(MyValueChangedEvent, value); }
+        }
+        #endregion ValueChangedイベント
+
         //MyValueの変更直後の動作
         private static void OnMyValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var ud = d as NumericUpDown;
-            var m = (decimal)e.NewValue;
+
+            decimal newValue = (decimal)e.NewValue;
+            decimal ovlValue = (decimal)e.OldValue;
             if (ud.MyTextBox.IsFocused)
             {
-                ud.MyText = m.ToString();
+                ud.MyText = newValue.ToString();
             }
             else
             {
-                var text = m.ToString(ud.MyStringFormat);
+                var text = newValue.ToString(ud.MyStringFormat);
                 ud.MyText = text;
-                ud.MyValue = m;//重要！！！！！！！！！！！！！！！！！！！
+                ud.MyValue = newValue;//重要！！！！！！！！！！！！！！！！！！！
             }
+            //追加したValueChangedイベント用処理
+            ud.OnMyValueChanged(new MyValuechangedEventArgs(MyValueChangedEvent, newValue, ovlValue));
         }
 
         //MyValueの変更直前の動作、値の検証、矛盾があれば値を書き換えて解消
@@ -471,6 +495,22 @@ namespace ControlLibraryCore20200620
 
 
     }
+
+
+    //値変更時のイベント用クラス
+    public class MyValuechangedEventArgs : RoutedEventArgs
+    {        
+        public MyValuechangedEventArgs(RoutedEvent id, decimal myNewValue, decimal myOldValue)
+        {
+            this.RoutedEvent = id;
+            MyNewValue = myNewValue;
+            MyOldValue = myOldValue;
+        }
+        public decimal MyNewValue { get; }
+        public decimal MyOldValue { get; }
+    }
+
+
 
 
     //RepeatButtonのWidthはUserControl全体のHeightから計算する用のコンバータ

@@ -48,6 +48,10 @@ namespace UserControlDll動作確認用
             nume.MyValue = 5;
         }
 
-
+        private void nume_MyValueChanged(object sender, ControlLibraryCore20200620.MyValuechangedEventArgs e)
+        {
+            if (MyLabel == null) return;
+            MyLabel.Content = $"古い値は：{e.MyOldValue}、新しい値は：{e.MyNewValue}";
+        }
     }
 }
