@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+//WPFにもNumericUpDownみたいなのをユーザーコントロールで、その1 - 午後わてんのブログ
+//https://gogowaten.hatenablog.com/entry/2020/06/20/205352
 
 //WPFにもNumericUpDownみたいなのをユーザーコントロールで、その7 - 午後わてんのブログ
 //https://gogowaten.hatenablog.com/entry/2020/07/13/001236
