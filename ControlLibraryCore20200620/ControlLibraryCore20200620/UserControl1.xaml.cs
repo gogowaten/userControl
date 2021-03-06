@@ -16,6 +16,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 
+//WPFにもNumericUpDownみたいなのをユーザーコントロールで、その7 - 午後わてんのブログ
+//https://gogowaten.hatenablog.com/entry/2020/07/13/001236
+
+
 namespace ControlLibraryCore20200620
 {
     /// <summary>
@@ -417,16 +421,16 @@ namespace ControlLibraryCore20200620
 
 
         //ボタンの▲と▼の色指定、Colorsの色名or#xxxxxxを指定
-        public SolidColorBrush MyButtonMarkColor
+        public Brush MyButtonMarkColor
         {
-            get { return (SolidColorBrush)GetValue(MyButtonMarkColorProperty); }
+            get { return (Brush)GetValue(MyButtonMarkColorProperty); }
             set { SetValue(MyButtonMarkColorProperty, value); }
         }
 
         public static readonly DependencyProperty MyButtonMarkColorProperty =
-            DependencyProperty.Register(nameof(MyButtonMarkColor), typeof(SolidColorBrush), typeof(NumericUpDown),
+            DependencyProperty.Register(nameof(MyButtonMarkColor), typeof(Brush), typeof(NumericUpDown),
                 new PropertyMetadata(new SolidColorBrush(Colors.DarkGray)));
-
+     
 
         //数字の表示位置、TextAlignmentを指定、既定値は右寄せ
         public TextAlignment MyTextAlignment
