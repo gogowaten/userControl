@@ -35,6 +35,7 @@
                 Maximum="{Binding ElementName=nume, Path=MyMaxValue}"/>
         </DockPanel>
         <!--<Button Content="セット(値：5、下限値：-10、上限値：20)" Click="Button_Click"/>-->
+        <Button x:Name="MyButtonTest" Content="test" Click="MyButtonTest_Click"/>
         <!--<DockPanel>
           <TextBlock Text="書式 = "/>
           <TextBox Text="{Binding ElementName=nume, Path=MyStringFormat, UpdateSourceTrigger=PropertyChanged}"/>
@@ -73,7 +74,7 @@
         <myControl:NumericUpDown x:Name="nume" Margin="10" Height="auto" FontSize="50" MyTextAlignment="Right"
                                  Foreground="Yellow" Background="Blue" BorderBrush="Red" MyButtonMarkColor="Cyan"
                                  FontFamily="HGP創英角ﾎﾟｯﾌﾟ体"
-                                 MyValue="100" MyMinValue="-100" MyMaxValue="2000" MyStringFormat="0.0"
+                                 MyValue="{Binding Path=MyData}" MyMinValue="-100" MyMaxValue="200" MyStringFormat="0.0"
                                  MyValueChanged="nume_MyValueChanged"/>
         <Label Name="MyLabel" Foreground="AliceBlue" Content="ValueChangedイベント確認用ラベル"/>
       </StackPanel>

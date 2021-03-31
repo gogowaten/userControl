@@ -159,7 +159,21 @@ namespace ControlLibraryCore20200620
         public decimal MyValue
         {
             get { return (decimal)GetValue(MyValueProperty); }
-            set { SetValue(MyValueProperty, value); }
+            set
+            {
+                //CoerceMyValueだけでは不十分だったのでここでも、
+                //新しい値が上限下限を超えていたら書き換えてからSetする
+                if (value > MyMaxValue)
+                {
+                    value = MyMaxValue;
+                }
+                if (value < MyMinValue)
+                {
+                    value = MyMinValue;
+                }
+                //Set
+                SetValue(MyValueProperty, value);
+            }
         }
 
         public static readonly DependencyProperty MyValueProperty =
@@ -178,7 +192,7 @@ namespace ControlLibraryCore20200620
                 RoutingStrategy.Bubble,
                 typeof(MyValueChangedEventHndler),
                 typeof(NumericUpDown));
-        
+
         public event MyValueChangedEventHndler MyValueChanged
         {
             add { AddHandler(MyValueChangedEvent, value); }
@@ -307,7 +321,7 @@ namespace ControlLibraryCore20200620
                     {
                         return ud.MyStringFormat;
                     }
-                    if(i==1 && sf.StartsWith("-") == false)
+                    if (i == 1 && sf.StartsWith("-") == false)
                     {
                         return ud.MyStringFormat;
                     }
@@ -432,7 +446,7 @@ namespace ControlLibraryCore20200620
         public static readonly DependencyProperty MyButtonMarkColorProperty =
             DependencyProperty.Register(nameof(MyButtonMarkColor), typeof(Brush), typeof(NumericUpDown),
                 new PropertyMetadata(new SolidColorBrush(Colors.DarkGray)));
-     
+
 
         //数字の表示位置、TextAlignmentを指定、既定値は右寄せ
         public TextAlignment MyTextAlignment
@@ -464,7 +478,7 @@ namespace ControlLibraryCore20200620
 
         //private static void OnMyWidthPropertyChanged(DependencyObject d,DependencyPropertyChangedEventArgs e)
         //{
-            
+
         //}
 
 
@@ -505,7 +519,7 @@ namespace ControlLibraryCore20200620
 
     //値変更時のイベント用クラス
     public class MyValuechangedEventArgs : RoutedEventArgs
-    {        
+    {
         public MyValuechangedEventArgs(RoutedEvent id, decimal myNewValue, decimal myOldValue)
         {
             this.RoutedEvent = id;

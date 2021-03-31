@@ -20,6 +20,7 @@ namespace UserControlDll動作確認用
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Data MyData;
         public MainWindow()
         {
             InitializeComponent();
@@ -38,7 +39,9 @@ namespace UserControlDll動作確認用
             //neko = 123m.ToString("0.");
             //neko = 123m.ToString("0,");
             //neko = 123m.ToString(";");
-            
+            MyData = new Data();
+            MyData.MyData = 50m;
+            this.DataContext = MyData;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -53,5 +56,16 @@ namespace UserControlDll動作確認用
             if (MyLabel == null) return;
             MyLabel.Content = $"古い値は：{e.MyOldValue}、新しい値は：{e.MyNewValue}";
         }
+
+        private void MyButtonTest_Click(object sender, RoutedEventArgs e)
+        {
+            var neko = nume.MyValue;
+            var inu = MyData.MyData;
+        }
+    }
+
+    public class Data
+    {
+        public decimal MyData { get; set; } = 50m;
     }
 }
